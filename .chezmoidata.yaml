@@ -1,0 +1,49 @@
+prompt_themes:
+  harbor:
+    dir: 109
+    dir_anchor: 45
+    dir_shortened: 244
+    git_clean: 76
+    git_dirty: 178
+    git_conflict: 196
+    prompt_ok: 76
+    prompt_error: 196
+    ssh_default: 45
+    ssh_prod: 196
+    ssh_stage: 208
+    ssh_dev: 39
+  graphite:
+    dir: 110
+    dir_anchor: 81
+    dir_shortened: 244
+    git_clean: 114
+    git_dirty: 179
+    git_conflict: 203
+    prompt_ok: 114
+    prompt_error: 203
+    ssh_default: 81
+    ssh_prod: 203
+    ssh_stage: 179
+    ssh_dev: 75
+
+host_profiles:
+  vlhnhp:
+    prompt_theme: harbor
+    machine_role: laptop
+    path_roots:
+      dev: "~/dev(|/*)"
+      config: "~/.config(|/*)"
+  default:
+    prompt_theme: harbor
+    machine_role: workstation
+    path_roots:
+      dev: "~/dev(|/*)"
+      config: "~/.config(|/*)"
+
+ssh_palette:
+  - 45
+  - 81
+  - 109
+  - 141
+  - 171
+  - 178

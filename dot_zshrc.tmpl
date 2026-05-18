@@ -1,0 +1,81 @@
+[[ -o interactive ]] || return
+
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=10000
+setopt append_history share_history hist_ignore_dups hist_ignore_space
+setopt hist_reduce_blanks inc_append_history
+setopt auto_cd auto_pushd pushd_ignore_dups
+setopt prompt_subst
+
+autoload -Uz compinit
+compinit -d "$HOME/.cache/zcompdump"
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+export EDITOR=nvim
+export VISUAL=nvim
+export PAGER=less
+export LESS='-R'
+export BAT_THEME=base16
+export PATH="$HOME/.local/bin:$PATH"
+
+alias ls='eza --group-directories-first --icons=auto'
+alias ll='eza -lah --group-directories-first --icons=auto'
+alias la='eza -la --group-directories-first --icons=auto'
+alias grep='grep --color=auto'
+alias cat='bat --paging=never'
+alias v='nvim'
+alias n='nvim'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias sp='sudo pacman'
+alias pacup='sudo pacman -Syu'
+alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
+alias bd='bg && disown'
+
+bindkey -e
+
+command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
+command -v fzf >/dev/null && source /usr/share/fzf/key-bindings.zsh
+command -v fzf >/dev/null && source /usr/share/fzf/completion.zsh
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#5f6368'
+[[ -r /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='fg=default,bg=default'
+[[ -r /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh ]] && source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey '^[OA' history-substring-search-up
+bindkey '^[OB' history-substring-search-down
+
+bindkey '^[[1;5D' backward-word
+bindkey '^[[1;5C' forward-word
+bindkey '^[[5D' backward-word
+bindkey '^[[5C' forward-word
+
+copy-command-line() {
+  print -rn -- "$BUFFER" | wl-copy
+}
+zle -N copy-command-line
+bindkey '^Y' copy-command-line
+
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+if [[ -r /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme ]]; then
+  source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+elif [[ -r "$HOME/powerlevel10k/powerlevel10k.zsh-theme" ]]; then
+  source "$HOME/powerlevel10k/powerlevel10k.zsh-theme"
+fi
+[[ -r "$HOME/.p10k.zsh" ]] && source "$HOME/.p10k.zsh"
+
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+[[ -r /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+function y() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  command yazi "$@" --cwd-file="$tmp"
+  IFS= read -r -d '' cwd < "$tmp"
+  [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+  command rm -f -- "$tmp"
+}
