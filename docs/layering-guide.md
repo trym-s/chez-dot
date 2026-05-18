@@ -85,8 +85,7 @@ themes:
     prompt_ok: 107
 
 host_profiles:
-  laptop:
-    theme: harbor
+  x230:
     machine_role: laptop
     path_roots:
       dev: "~/dev(|/*)"
@@ -97,12 +96,13 @@ Local config selects the profile and can override the theme:
 
 ```toml
 [data]
-host_profile = "laptop"
+host_profile = "x230"
 theme = "rose"
 ```
 
-The profile says what kind of machine this is. The theme says what visual
-language to use. A template consumes both.
+The profile says what machine this is. The theme says what visual language to
+use. Host profiles do not select themes; every machine selects its theme in
+local `chezmoi.toml`.
 
 ## How Templates Read Data
 
@@ -191,7 +191,7 @@ If only some profiles should get it, add a boolean to profile data:
 
 ```yaml
 host_profiles:
-  laptop:
+  x230:
     zsh:
       enable_mkcd: true
 ```
@@ -207,7 +207,7 @@ mkcd() {
 ```
 
 Keep the condition about capability or behavior, not host name. Prefer
-`enable_mkcd` over `if host_profile == "laptop"`.
+`enable_mkcd` over `if host_profile == "x230"`.
 
 ## Core vs Difference Area
 
@@ -272,7 +272,6 @@ Add a profile:
 ```yaml
 host_profiles:
   x230:
-    theme: rose
     machine_role: laptop
     path_roots:
       dev: "~/dev(|/*)"
@@ -294,7 +293,8 @@ host_profile = "x230"
 theme = "graphite"
 ```
 
-Local config is the only machine-local file required for selection.
+Local config is the only machine-local file required for selection. It should
+always select both `host_profile` and `theme`.
 
 Unknown theme names fall back to `harbor`. Common aliases can be declared under
 `theme_aliases`:

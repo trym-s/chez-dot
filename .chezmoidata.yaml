@@ -98,37 +98,21 @@ theme_aliases:
 
 host_profiles:
   vlhnhp:
-    theme: harbor
     machine_role: laptop
     path_roots:
       dev: "~/dev(|/*)"
       config: "~/.config(|/*)"
-  laptop:
-    theme: harbor
+  x230:
     machine_role: laptop
     path_roots:
       dev: "~/dev(|/*)"
       config: "~/.config(|/*)"
-  workstation:
-    theme: graphite
+  ac:
     machine_role: workstation
     path_roots:
       dev: "~/dev(|/*)"
       config: "~/.config(|/*)"
-  server:
-    theme: mono
-    machine_role: server
-    path_roots:
-      dev: "~/src(|/*)"
-      config: "~/.config(|/*)"
-  lab:
-    theme: violet
-    machine_role: lab
-    path_roots:
-      dev: "~/dev(|/*)"
-      config: "~/.config(|/*)"
   default:
-    theme: harbor
     machine_role: workstation
     path_roots:
       dev: "~/dev(|/*)"

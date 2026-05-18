@@ -2,7 +2,7 @@
 {{- if hasKey . "host_profile" -}}{{- $profileName = .host_profile -}}{{- end -}}
 {{- if not (hasKey .host_profiles $profileName) -}}{{- $profileName = "default" -}}{{- end -}}
 {{- $profile := index .host_profiles $profileName -}}
-{{- $themeName := $profile.theme -}}
+{{- $themeName := "harbor" -}}
 {{- if hasKey . "theme" -}}{{- $themeName = .theme -}}{{- end -}}
 {{- if and (not (hasKey .themes $themeName)) (hasKey .theme_aliases $themeName) -}}{{- $themeName = index .theme_aliases $themeName -}}{{- end -}}
 {{- if not (hasKey .themes $themeName) -}}{{- $themeName = "harbor" -}}{{- end -}}
