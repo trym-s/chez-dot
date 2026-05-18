@@ -11,6 +11,7 @@ The first layer manages only zsh and Powerlevel10k. Other terminal or desktop
 configs should be added later using the same pattern: generic template plus
 small profile data. Theme names are generic system themes, not prompt-specific
 themes, so kitty, tmux, yazi, nvim, and prompt can all consume the same value.
+Current themes are `rose`, `harbor`, `graphite`, `ember`, `violet`, and `mono`.
 
 ## Host profiles
 

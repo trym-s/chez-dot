@@ -1,4 +1,32 @@
 themes:
+  rose:
+    bg: "08090a"
+    fg: "d7d7d7"
+    accent: "e11d48"
+    accent_bright: "ff4d6d"
+    surface: "1f2328"
+    surface2: "2a2f35"
+    muted: "5f6368"
+    subtle: "858585"
+    warning: "f9d56e"
+    green: "87af5f"
+    yellow: "f9d56e"
+    blue: "5f87af"
+    magenta: "af5f87"
+    cyan: "5fafd7"
+    white: "ffffff"
+    dir: 167
+    dir_anchor: 197
+    dir_shortened: 242
+    git_clean: 107
+    git_dirty: 221
+    git_conflict: 197
+    prompt_ok: 107
+    prompt_error: 197
+    ssh_default: 167
+    ssh_prod: 197
+    ssh_stage: 221
+    ssh_dev: 107
   harbor:
     dir: 109
     dir_anchor: 45
