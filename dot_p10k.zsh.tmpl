@@ -13,11 +13,9 @@ typeset -g POWERLEVEL9K_ICON_PADDING=none
 typeset -g DOT_PROFILE='{{ $profileName }}'
 typeset -g DOT_THEME='{{ $themeName }}'
 typeset -ga DOT_SSH_PALETTE=({{ range .ssh_palette }}{{ . }} {{ end }})
-typeset -g DOT_SSH_ACTIVE_FOREGROUND=16
-typeset -g DOT_SSH_ACTIVE_BACKGROUND={{ $theme.ssh_default }}
 
 typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
-  connection
+  remote_badge
   dir
   vcs
   newline
@@ -79,22 +77,32 @@ typeset -g POWERLEVEL9K_DIR_ETC_FOREGROUND={{ $theme.ssh_stage }}
 typeset -g POWERLEVEL9K_DIR_ETC_ANCHOR_FOREGROUND={{ $theme.ssh_stage }}
 typeset -g POWERLEVEL9K_DIR_DEFAULT_VISUAL_IDENTIFIER_EXPANSION=''
 
-function prompt_connection() {
+typeset -g POWERLEVEL9K_REMOTE_BADGE_DEFAULT_BACKGROUND={{ $theme.ssh_default }}
+typeset -g POWERLEVEL9K_REMOTE_BADGE_DEFAULT_FOREGROUND=15
+typeset -g POWERLEVEL9K_REMOTE_BADGE_PROD_BACKGROUND={{ $theme.ssh_prod }}
+typeset -g POWERLEVEL9K_REMOTE_BADGE_PROD_FOREGROUND=15
+typeset -g POWERLEVEL9K_REMOTE_BADGE_STAGE_BACKGROUND={{ $theme.ssh_stage }}
+typeset -g POWERLEVEL9K_REMOTE_BADGE_STAGE_FOREGROUND=16
+typeset -g POWERLEVEL9K_REMOTE_BADGE_DEV_BACKGROUND={{ $theme.ssh_dev }}
+typeset -g POWERLEVEL9K_REMOTE_BADGE_DEV_FOREGROUND=16
+typeset -g POWERLEVEL9K_REMOTE_BADGE_VISUAL_IDENTIFIER_EXPANSION=
+typeset -g POWERLEVEL9K_REMOTE_BADGE_LEFT_LEFT_WHITESPACE=' '
+typeset -g POWERLEVEL9K_REMOTE_BADGE_LEFT_RIGHT_WHITESPACE=' '
+typeset -g POWERLEVEL9K_REMOTE_BADGE_PREFIX=' '
+typeset -g POWERLEVEL9K_REMOTE_BADGE_SUFFIX=' '
+
+function prompt_remote_badge() {
   [[ -n ${SSH_CONNECTION:-}${SSH_CLIENT:-} ]] || return
 
   local host=${HOST%%.*}
-  local bg={{ $theme.ssh_default }}
+  local state=DEFAULT
   case ${host:l} in
-    *prod*|*prd*|*live*) bg={{ $theme.ssh_prod }} ;;
-    *stage*|*stg*|*test*) bg={{ $theme.ssh_stage }} ;;
-    *dev*|*lab*) bg={{ $theme.ssh_dev }} ;;
-    *)
-      bg=${DOT_SSH_PALETTE[$(( ${#host} % $#DOT_SSH_PALETTE + 1 ))]}
-      ;;
+    *prod*|*prd*|*live*) state=PROD ;;
+    *stage*|*stg*|*test*) state=STAGE ;;
+    *dev*|*lab*) state=DEV ;;
   esac
-  DOT_SSH_ACTIVE_BACKGROUND=$bg
 
-  p10k segment -f $DOT_SSH_ACTIVE_FOREGROUND -b $bg -i '󰣀' -t " ${USER}@${host} "
+  p10k segment -s $state -t "SSH ${USER}@${host}"
 }
 
 function my_git_formatter() {
