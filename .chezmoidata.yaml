@@ -160,7 +160,7 @@ hypr_appearance_profiles:
       color: "rgba(00000055)"
     blur:
       enabled: false
-      size: 5
+      size: 3
       passes: 2
       vibrancy: "0.16"
     animations:
@@ -173,7 +173,7 @@ hypr_appearance_profiles:
   hypr:
     gaps_in: 4
     gaps_out: 8
-    border_size: 2
+    border_size: 4
     rounding: 8
     shadow:
       enabled: true
