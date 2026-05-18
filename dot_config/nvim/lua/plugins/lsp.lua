@@ -44,6 +44,19 @@ return {
         capabilities = capabilities,
       })
 
+      vim.lsp.config("pyright", {
+        settings = {
+          python = {
+            analysis = {
+              typeCheckingMode = "basic",
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+              diagnosticMode = "openFilesOnly",
+            },
+          },
+        },
+      })
+
       vim.lsp.config("lua_ls", {
         settings = {
           Lua = {
