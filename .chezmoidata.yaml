@@ -111,7 +111,7 @@ host_profiles:
     machine:
       icon: '󰍹'
       label: 'AC'
-      accent: 141
+      accent: 166
   default: {}
 
 ssh_palette:
