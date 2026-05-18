@@ -7,6 +7,8 @@
 {{- if and (not (hasKey .themes $themeName)) (hasKey .theme_aliases $themeName) -}}{{- $themeName = index .theme_aliases $themeName -}}{{- end -}}
 {{- if not (hasKey .themes $themeName) -}}{{- $themeName = "harbor" -}}{{- end -}}
 {{- $theme := index .themes $themeName -}}
+{{- $hostAccent := $theme.term_accent -}}
+{{- if hasKey $profile "machine" -}}{{- $hostAccent = $profile.machine.accent -}}{{- end -}}
 # Powerlevel10k config rendered by chezmoi.
 
 'builtin' 'local' '-a' 'p10k_config_opts'
@@ -72,10 +74,11 @@
   typeset -g POWERLEVEL9K_DIR_MIN_COMMAND_COLUMNS_PCT=50
   typeset -g POWERLEVEL9K_DIR_HYPERLINK=false
   typeset -g POWERLEVEL9K_DIR_SHOW_WRITABLE=v3
-  typeset -g POWERLEVEL9K_DIR_FOREGROUND={{ $theme.term_accent }}
+  typeset -g POWERLEVEL9K_DIR_FOREGROUND={{ $hostAccent }}
   typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND={{ $theme.term_muted }}
-  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND={{ $theme.term_accent_alt }}
+  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND={{ $hostAccent }}
   typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=true
+  typeset -g POWERLEVEL9K_DIR_CONTENT_EXPANSION='%B${P9K_CONTENT}%b'
   typeset -g POWERLEVEL9K_DIR_CLASSES=(
     '~/dev(|/*)'                        DEV     ''
     '~/.config(|/*)'                    CONFIG  ''
@@ -84,27 +87,28 @@
     '*'                                 DEFAULT ''
   )
   typeset -g POWERLEVEL9K_DIR_DEV_VISUAL_IDENTIFIER_EXPANSION='󰲋'
-  typeset -g POWERLEVEL9K_DIR_DEV_FOREGROUND={{ $theme.term_accent }}
-  typeset -g POWERLEVEL9K_DIR_DEV_ANCHOR_FOREGROUND={{ $theme.term_accent_alt }}
+  typeset -g POWERLEVEL9K_DIR_DEV_FOREGROUND={{ $hostAccent }}
+  typeset -g POWERLEVEL9K_DIR_DEV_ANCHOR_FOREGROUND={{ $hostAccent }}
   typeset -g POWERLEVEL9K_DIR_CONFIG_VISUAL_IDENTIFIER_EXPANSION=''
-  typeset -g POWERLEVEL9K_DIR_CONFIG_FOREGROUND={{ $theme.term_accent }}
-  typeset -g POWERLEVEL9K_DIR_CONFIG_ANCHOR_FOREGROUND={{ $theme.term_accent_alt }}
+  typeset -g POWERLEVEL9K_DIR_CONFIG_FOREGROUND={{ $hostAccent }}
+  typeset -g POWERLEVEL9K_DIR_CONFIG_ANCHOR_FOREGROUND={{ $hostAccent }}
   typeset -g POWERLEVEL9K_DIR_HOME_VISUAL_IDENTIFIER_EXPANSION=''
-  typeset -g POWERLEVEL9K_DIR_HOME_FOREGROUND={{ $theme.term_accent }}
-  typeset -g POWERLEVEL9K_DIR_HOME_ANCHOR_FOREGROUND={{ $theme.term_accent_alt }}
+  typeset -g POWERLEVEL9K_DIR_HOME_FOREGROUND={{ $hostAccent }}
+  typeset -g POWERLEVEL9K_DIR_HOME_ANCHOR_FOREGROUND={{ $hostAccent }}
+  typeset -g POWERLEVEL9K_DIR_HOME_CONTENT_EXPANSION='%B●%b'
   typeset -g POWERLEVEL9K_DIR_ETC_VISUAL_IDENTIFIER_EXPANSION=''
   typeset -g POWERLEVEL9K_DIR_ETC_FOREGROUND={{ $theme.term_warning }}
   typeset -g POWERLEVEL9K_DIR_ETC_ANCHOR_FOREGROUND={{ $theme.term_warning }}
   typeset -g POWERLEVEL9K_DIR_DEFAULT_VISUAL_IDENTIFIER_EXPANSION=''
 
-  typeset -g POWERLEVEL9K_REMOTE_BADGE_DEFAULT_BACKGROUND={{ $theme.term_accent }}
-  typeset -g POWERLEVEL9K_REMOTE_BADGE_DEFAULT_FOREGROUND={{ $theme.term_fg }}
-  typeset -g POWERLEVEL9K_REMOTE_BADGE_PROD_BACKGROUND={{ $theme.term_accent_alt }}
-  typeset -g POWERLEVEL9K_REMOTE_BADGE_PROD_FOREGROUND={{ $theme.term_fg }}
-  typeset -g POWERLEVEL9K_REMOTE_BADGE_STAGE_BACKGROUND={{ $theme.term_warning }}
-  typeset -g POWERLEVEL9K_REMOTE_BADGE_STAGE_FOREGROUND={{ $theme.term_bg }}
-  typeset -g POWERLEVEL9K_REMOTE_BADGE_DEV_BACKGROUND={{ $theme.term_success }}
-  typeset -g POWERLEVEL9K_REMOTE_BADGE_DEV_FOREGROUND={{ $theme.term_bg }}
+  typeset -g POWERLEVEL9K_REMOTE_BADGE_DEFAULT_BACKGROUND=
+  typeset -g POWERLEVEL9K_REMOTE_BADGE_DEFAULT_FOREGROUND={{ $hostAccent }}
+  typeset -g POWERLEVEL9K_REMOTE_BADGE_PROD_BACKGROUND=
+  typeset -g POWERLEVEL9K_REMOTE_BADGE_PROD_FOREGROUND={{ $theme.term_accent_alt }}
+  typeset -g POWERLEVEL9K_REMOTE_BADGE_STAGE_BACKGROUND=
+  typeset -g POWERLEVEL9K_REMOTE_BADGE_STAGE_FOREGROUND={{ $theme.term_warning }}
+  typeset -g POWERLEVEL9K_REMOTE_BADGE_DEV_BACKGROUND=
+  typeset -g POWERLEVEL9K_REMOTE_BADGE_DEV_FOREGROUND={{ $theme.term_success }}
   typeset -g POWERLEVEL9K_REMOTE_BADGE_VISUAL_IDENTIFIER_EXPANSION=
   typeset -g POWERLEVEL9K_REMOTE_BADGE_CONTENT_EXPANSION='%B${P9K_CONTENT}%b'
   typeset -g POWERLEVEL9K_REMOTE_BADGE_LEFT_LEFT_WHITESPACE=' '
@@ -114,9 +118,9 @@
 {{- if hasKey $profile "machine" }}
   typeset -g _P10K_SSH_ICON='{{ $profile.machine.icon }}'
   typeset -g _P10K_SSH_LABEL='{{ $profile.machine.label }}'
-  typeset -g POWERLEVEL9K_REMOTE_BADGE_HOST_BACKGROUND={{ $theme.term_accent }}
-  typeset -g POWERLEVEL9K_REMOTE_BADGE_HOST_FOREGROUND={{ $theme.term_fg }}
-  typeset -g POWERLEVEL9K_REMOTE_BADGE_HOST_CONTENT_EXPANSION='${P9K_CONTENT}'
+  typeset -g POWERLEVEL9K_REMOTE_BADGE_HOST_BACKGROUND=
+  typeset -g POWERLEVEL9K_REMOTE_BADGE_HOST_FOREGROUND={{ $hostAccent }}
+  typeset -g POWERLEVEL9K_REMOTE_BADGE_HOST_CONTENT_EXPANSION='%B${P9K_CONTENT}%b'
 {{- end }}
 
   typeset -g POWERLEVEL9K_STATUS_EXTENDED_STATES=true
@@ -146,7 +150,7 @@
     [[ -z ${WAYLAND_DISPLAY:-}${DISPLAY:-} ]] || return
 
     if [[ -n ${_P10K_SSH_LABEL:-} ]]; then
-      p10k segment -s HOST -t "${_P10K_SSH_ICON}  %B${_P10K_SSH_LABEL}%b · ${USER}"
+      p10k segment -s HOST -t "${_P10K_SSH_ICON} ${_P10K_SSH_LABEL}"
       return
     fi
 
