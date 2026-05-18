@@ -1,7 +1,7 @@
 # Dotfiles
 
-Chezmoi-managed Arch dotfiles. The current scope covers shell prompt files,
-kitty, and Hyprland configuration.
+Chezmoi-managed Arch dotfiles. The current scope covers shell, prompt, tmux,
+kitty, Neovim, and Hyprland configuration.
 
 ## Daily workflow
 
@@ -17,10 +17,14 @@ unless you intentionally plan to capture the rendered change back into source.
 See `docs/layering-guide.md` for how to add files, profile differences, and
 theme-driven regions.
 
-## First scope
+## Managed scope
 
-- `dot_zshrc.tmpl`: generic zsh base loader.
-- `dot_p10k.zsh.tmpl`: prompt layout and host-aware colors.
+- `dot_zshrc`: minimal zsh entrypoint that loads the managed config.
+- `dot_config/zsh/zshrc.tmpl`: generic zsh config and shell integrations.
+- `dot_config/p10k/p10k.zsh.tmpl`: prompt layout and host-aware colors.
+- `dot_tmux.conf.tmpl`: tmux keybindings, pane/window behavior, and themed status.
+- `dot_config/kitty/kitty.conf.tmpl`: kitty terminal settings and theme.
+- `dot_config/nvim/`: modular Neovim config with generated core palette.
 - `.chezmoidata.yaml`: shared profiles, themes, shell data, and Hyprland host data.
 - `dot_config/hypr/`: modular Hyprland configuration with host-aware monitor
   and NVIDIA includes.

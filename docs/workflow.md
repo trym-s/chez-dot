@@ -15,5 +15,5 @@
 
 ## Keep layers small
 
-Add new domains one at a time. For example, add tmux as the second layer only
-after zsh and Powerlevel10k are stable across all machines.
+Add new domains one at a time. Keep each tool's core behavior in its source
+template, and keep profile/theme differences in `.chezmoidata.yaml`.

@@ -58,15 +58,17 @@ Shared data lives in:
 Rendered files live in `$HOME`, for example:
 
 ```text
-dot_zshrc.tmpl      -> ~/.zshrc
-dot_p10k.zsh.tmpl   -> ~/.p10k.zsh
+dot_zshrc                         -> ~/.zshrc
+dot_config/zsh/zshrc.tmpl         -> ~/.config/zsh/zshrc
+dot_config/p10k/p10k.zsh.tmpl     -> ~/.config/p10k/p10k.zsh
+dot_config/nvim/lua/core/palette.lua.tmpl -> ~/.config/nvim/lua/core/palette.lua
 ```
 
 Edit source files first, then render:
 
 ```sh
 chezmoi cd
-nvim dot_zshrc.tmpl
+nvim dot_config/zsh/zshrc.tmpl
 chezmoi diff
 chezmoi apply
 ```
@@ -176,7 +178,8 @@ Example: add Yazi theme management.
 
 Example: add an optional zsh helper function.
 
-If every machine should get it, put it directly in `dot_zshrc.tmpl`:
+If every machine should get it, put it directly in
+`dot_config/zsh/zshrc.tmpl`:
 
 ```zsh
 mkcd() {
@@ -223,7 +226,7 @@ Examples:
 | yazi | TOML section structure | colors/icons from theme |
 | kitty | shell command | font size, opacity, theme |
 | tmux | prefix and navigation model | status colors, status position |
-| nvim | plugin list and keymaps | colorscheme name, font/UI density |
+| nvim | core modules, plugin specs, keymaps | generated palette, colorscheme name |
 
 ## Adding a New Theme
 
@@ -258,7 +261,7 @@ Test without changing the local machine:
 
 ```sh
 chezmoi execute-template --override-data '{"theme":"glacier"}' \
-  < dot_p10k.zsh.tmpl > /tmp/p10k-glacier.zsh
+  < dot_config/p10k/p10k.zsh.tmpl > /tmp/p10k-glacier.zsh
 zsh -n /tmp/p10k-glacier.zsh
 ```
 
@@ -309,8 +312,16 @@ chezmoi status
 Render one template manually:
 
 ```sh
-chezmoi execute-template < dot_p10k.zsh.tmpl > /tmp/p10k.zsh
+chezmoi execute-template < dot_config/p10k/p10k.zsh.tmpl > /tmp/p10k.zsh
 zsh -n /tmp/p10k.zsh
+```
+
+Render the Neovim palette for a specific theme:
+
+```sh
+chezmoi execute-template --override-data '{"theme":"graphite"}' \
+  < dot_config/nvim/lua/core/palette.lua.tmpl > /tmp/nvim-palette.lua
+luac -p /tmp/nvim-palette.lua
 ```
 
 Show managed files:
