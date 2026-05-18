@@ -60,8 +60,8 @@ typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND={{ $theme.dir_shortened }}
 typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND={{ $theme.dir_anchor }}
 typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=true
 typeset -g POWERLEVEL9K_DIR_CLASSES=(
-  '{{ $profile.path_roots.dev }}'     DEV     ''
-  '{{ $profile.path_roots.config }}'  CONFIG  ''
+  '~/dev(|/*)'                        DEV     ''
+  '~/.config(|/*)'                    CONFIG  ''
   '~(|/*)'                            HOME    ''
   '/etc(|/*)'                         ETC     ''
   '*'                                 DEFAULT ''

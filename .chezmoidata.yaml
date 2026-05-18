@@ -97,26 +97,10 @@ theme_aliases:
   violent: violet
 
 host_profiles:
-  vlhnhp:
-    machine_role: laptop
-    path_roots:
-      dev: "~/dev(|/*)"
-      config: "~/.config(|/*)"
-  x230:
-    machine_role: laptop
-    path_roots:
-      dev: "~/dev(|/*)"
-      config: "~/.config(|/*)"
-  ac:
-    machine_role: workstation
-    path_roots:
-      dev: "~/dev(|/*)"
-      config: "~/.config(|/*)"
-  default:
-    machine_role: workstation
-    path_roots:
-      dev: "~/dev(|/*)"
-      config: "~/.config(|/*)"
+  vlhnhp: {}
+  x230: {}
+  ac: {}
+  default: {}
 
 ssh_palette:
   - 45

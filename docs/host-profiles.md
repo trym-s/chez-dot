@@ -10,5 +10,5 @@ Current profiles:
 Use `theme = "rose"` in local `chezmoi.toml` to select the red/yellow palette
 derived from the current Yazi theme. Host profiles do not select themes.
 
-Add future machines by copying `default`, then changing only the values that
-actually differ.
+Add future machines as empty profile keys. Only add fields when a template
+actually consumes them.
