@@ -1,7 +1,7 @@
 # Dotfiles
 
-Chezmoi-managed Arch dotfiles. This repository starts with the shell prompt
-layer only: zsh plus Powerlevel10k.
+Chezmoi-managed Arch dotfiles. The current scope covers shell prompt files,
+kitty, and Hyprland configuration.
 
 ## Daily workflow
 
@@ -21,6 +21,8 @@ theme-driven regions.
 
 - `dot_zshrc.tmpl`: generic zsh base loader.
 - `dot_p10k.zsh.tmpl`: prompt layout and host-aware colors.
-- `.chezmoidata.yaml`: shared profiles, themes, and shell data.
+- `.chezmoidata.yaml`: shared profiles, themes, shell data, and Hyprland host data.
+- `dot_config/hypr/`: modular Hyprland configuration with host-aware monitor
+  and NVIDIA includes.
 - `packages/`: Arch package inputs split by `pacman` and `yay`.
 - `~/.config/chezmoi/chezmoi.toml`: local machine selection.

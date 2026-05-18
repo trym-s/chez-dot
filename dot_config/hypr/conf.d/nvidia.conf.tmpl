@@ -1,0 +1,7 @@
+{{- $profileName := "default" -}}
+{{- if hasKey . "host_profile" -}}{{- $profileName = .host_profile -}}{{- end -}}
+{{- if not (hasKey .host_profiles $profileName) -}}{{- $profileName = "default" -}}{{- end -}}
+{{- $profile := index .host_profiles $profileName -}}
+{{- range $line := $profile.hypr.nvidia_env -}}
+{{ printf "%s\n" $line -}}
+{{- end -}}

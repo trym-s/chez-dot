@@ -1,0 +1,8 @@
+{{- $profileName := "default" -}}
+{{- if hasKey . "host_profile" -}}{{- $profileName = .host_profile -}}{{- end -}}
+{{- if not (hasKey .host_profiles $profileName) -}}{{- $profileName = "default" -}}{{- end -}}
+{{- $profile := index .host_profiles $profileName -}}
+{{- $defaultProfile := index .host_profiles "default" -}}
+{{- $monitor := $defaultProfile.hypr.monitor -}}
+{{- if $profile.hypr.monitor -}}{{- $monitor = $profile.hypr.monitor -}}{{- end -}}
+{{ $monitor }}
