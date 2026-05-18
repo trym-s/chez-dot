@@ -1,0 +1,51 @@
+{{- $themeName := "rose" -}}
+{{- if hasKey . "theme" -}}{{- $themeName = .theme -}}{{- end -}}
+{{- if and (not (hasKey .themes $themeName)) (hasKey .theme_aliases $themeName) -}}{{- $themeName = index .theme_aliases $themeName -}}{{- end -}}
+{{- if not (hasKey .themes $themeName) -}}{{- $themeName = "rose" -}}{{- end -}}
+{{- $theme := index .themes $themeName -}}
+font_family {{ $theme.font_family }}
+font_size {{ $theme.terminal_font_size }}
+
+background #{{ $theme.bg }}
+foreground #{{ $theme.fg }}
+selection_background #{{ $theme.accent }}
+selection_foreground #{{ $theme.white }}
+cursor #{{ $theme.accent }}
+cursor_text_color #{{ $theme.bg }}
+url_color #{{ $theme.cyan_bright }}
+
+color0  #{{ $theme.bg }}
+color1  #{{ $theme.accent }}
+color2  #{{ $theme.success }}
+color3  #{{ $theme.warning_dim }}
+color4  #{{ $theme.info }}
+color5  #{{ $theme.secondary }}
+color6  #{{ $theme.cyan }}
+color7  #{{ $theme.fg }}
+color8  #{{ $theme.muted }}
+color9  #{{ $theme.accent_alt }}
+color10 #{{ $theme.success_bright }}
+color11 #{{ $theme.warning }}
+color12 #{{ $theme.info_bright }}
+color13 #{{ $theme.secondary_bright }}
+color14 #{{ $theme.cyan_bright }}
+color15 #{{ $theme.white }}
+
+window_padding_width 4
+background_opacity {{ $theme.terminal_opacity }}
+dynamic_background_opacity yes
+inactive_text_alpha 0.78
+active_border_color #{{ $theme.accent }}
+inactive_border_color #{{ $theme.surface }}
+bell_border_color #{{ $theme.attention }}
+tab_bar_style powerline
+tab_powerline_style slanted
+active_tab_background #{{ $theme.accent }}
+active_tab_foreground #{{ $theme.bg }}
+inactive_tab_background #{{ $theme.surface_dark }}
+inactive_tab_foreground #{{ $theme.subtle }}
+hide_window_decorations yes
+confirm_os_window_close 0
+enable_audio_bell no
+sync_to_monitor yes
+shell zsh -lc 'if command -v tmux >/dev/null 2>&1; then tmux new-session -s "kitty-$(date +%Y%m%d-%H%M%S-%N)"; fi; exec zsh'

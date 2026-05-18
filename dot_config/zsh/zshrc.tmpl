@@ -1,3 +1,8 @@
+{{- $themeName := "rose" -}}
+{{- if hasKey . "theme" -}}{{- $themeName = .theme -}}{{- end -}}
+{{- if and (not (hasKey .themes $themeName)) (hasKey .theme_aliases $themeName) -}}{{- $themeName = index .theme_aliases $themeName -}}{{- end -}}
+{{- if not (hasKey .themes $themeName) -}}{{- $themeName = "rose" -}}{{- end -}}
+{{- $theme := index .themes $themeName -}}
 [[ -o interactive ]] || return
 
 HISTFILE="$HOME/.zsh_history"
@@ -40,7 +45,7 @@ command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 command -v fzf >/dev/null && source /usr/share/fzf/key-bindings.zsh
 command -v fzf >/dev/null && source /usr/share/fzf/completion.zsh
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#5f6368'
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#{{ $theme.muted }}'
 [[ -r /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='fg=default,bg=default'
@@ -67,7 +72,7 @@ if [[ -r /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme ]]; then
 elif [[ -r "$HOME/powerlevel10k/powerlevel10k.zsh-theme" ]]; then
   source "$HOME/powerlevel10k/powerlevel10k.zsh-theme"
 fi
-[[ -r "$HOME/.p10k.zsh" ]] && source "$HOME/.p10k.zsh"
+[[ -r "$HOME/.config/p10k/p10k.zsh" ]] && source "$HOME/.config/p10k/p10k.zsh"
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 [[ -r /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

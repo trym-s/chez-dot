@@ -1,97 +1,148 @@
 themes:
   rose:
+    font_family: "JetBrainsMono Nerd Font"
+    terminal_font_size: "10.5"
+    terminal_opacity: "0.96"
     bg: "08090a"
     fg: "d7d7d7"
-    accent: "e11d48"
-    accent_bright: "ff4d6d"
     surface: "1f2328"
-    surface2: "2a2f35"
+    surface_alt: "2a2f35"
+    surface_dark: "15171a"
     muted: "5f6368"
     subtle: "858585"
+    accent: "e11d48"
+    accent_alt: "ff4d6d"
+    success: "87af5f"
+    success_bright: "a6d189"
+    warning_dim: "d7af5f"
     warning: "f9d56e"
-    green: "87af5f"
-    yellow: "f9d56e"
-    blue: "5f87af"
-    magenta: "af5f87"
+    attention: "ffb86c"
+    info: "5f87af"
+    info_bright: "89b4fa"
+    secondary: "af5f87"
+    secondary_bright: "f5a6c8"
     cyan: "5fafd7"
+    cyan_bright: "89dceb"
     white: "ffffff"
-    dir: 167
-    dir_anchor: 197
-    dir_shortened: 242
-    git_clean: 107
-    git_dirty: 221
-    git_conflict: 197
-    prompt_ok: 107
-    prompt_error: 197
-    ssh_default: 167
-    ssh_prod: 197
-    ssh_stage: 221
-    ssh_dev: 107
+    term_bg: 16
+    term_fg: 15
+    term_accent: 167
+    term_accent_alt: 197
+    term_success: 107
+    term_warning: 221
+    term_muted: 242
   harbor:
-    dir: 109
-    dir_anchor: 45
-    dir_shortened: 244
-    git_clean: 76
-    git_dirty: 178
-    git_conflict: 196
-    prompt_ok: 76
-    prompt_error: 196
-    ssh_default: 45
-    ssh_prod: 196
-    ssh_stage: 208
-    ssh_dev: 39
+    term_bg: 16
+    term_fg: 15
+    term_accent: 109
+    term_accent_alt: 45
+    term_success: 76
+    term_warning: 178
+    term_muted: 244
   graphite:
-    dir: 110
-    dir_anchor: 81
-    dir_shortened: 244
-    git_clean: 114
-    git_dirty: 179
-    git_conflict: 203
-    prompt_ok: 114
-    prompt_error: 203
-    ssh_default: 81
-    ssh_prod: 203
-    ssh_stage: 179
-    ssh_dev: 75
+    font_family: "JetBrainsMono Nerd Font"
+    terminal_font_size: "10.5"
+    terminal_opacity: "0.96"
+    bg: "0b0d0f"
+    fg: "d7dde2"
+    surface: "1b2025"
+    surface_alt: "252b31"
+    surface_dark: "13171b"
+    muted: "626b73"
+    subtle: "8b949e"
+    accent: "87afaf"
+    accent_alt: "5fd7ff"
+    success: "87d787"
+    success_bright: "a7e3a0"
+    warning_dim: "d7af5f"
+    warning: "d7af5f"
+    attention: "ffaf5f"
+    info: "5f87af"
+    info_bright: "87d7ff"
+    secondary: "afafd7"
+    secondary_bright: "d7d7ff"
+    cyan: "5fafaf"
+    cyan_bright: "87d7d7"
+    white: "ffffff"
+    term_bg: 16
+    term_fg: 15
+    term_accent: 110
+    term_accent_alt: 81
+    term_success: 114
+    term_warning: 179
+    term_muted: 244
   ember:
-    dir: 180
-    dir_anchor: 214
-    dir_shortened: 244
-    git_clean: 142
-    git_dirty: 214
-    git_conflict: 196
-    prompt_ok: 142
-    prompt_error: 196
-    ssh_default: 214
-    ssh_prod: 196
-    ssh_stage: 208
-    ssh_dev: 143
+    font_family: "JetBrainsMono Nerd Font"
+    terminal_font_size: "10.5"
+    terminal_opacity: "0.96"
+    bg: "100c08"
+    fg: "e7d6c5"
+    surface: "241a12"
+    surface_alt: "342419"
+    surface_dark: "18110c"
+    muted: "7a6758"
+    subtle: "a28d7a"
+    accent: "d7af87"
+    accent_alt: "ffaf00"
+    success: "afaf00"
+    success_bright: "d7d75f"
+    warning_dim: "d7875f"
+    warning: "ffaf00"
+    attention: "ff875f"
+    info: "87afd7"
+    info_bright: "afd7ff"
+    secondary: "d787af"
+    secondary_bright: "ffafd7"
+    cyan: "87afaf"
+    cyan_bright: "afd7d7"
+    white: "fff8ef"
+    term_bg: 16
+    term_fg: 15
+    term_accent: 180
+    term_accent_alt: 214
+    term_success: 142
+    term_warning: 214
+    term_muted: 244
   violet:
-    dir: 147
-    dir_anchor: 141
-    dir_shortened: 244
-    git_clean: 114
-    git_dirty: 177
-    git_conflict: 204
-    prompt_ok: 114
-    prompt_error: 204
-    ssh_default: 141
-    ssh_prod: 204
-    ssh_stage: 177
-    ssh_dev: 75
+    font_family: "JetBrainsMono Nerd Font"
+    terminal_font_size: "10.5"
+    terminal_opacity: "0.96"
+    bg: "0d0b12"
+    fg: "ddd7e8"
+    surface: "1f1a2a"
+    surface_alt: "2b2438"
+    surface_dark: "15111d"
+    muted: "6d6478"
+    subtle: "948aa3"
+    accent: "afafff"
+    accent_alt: "af87ff"
+    success: "87d787"
+    success_bright: "afffaf"
+    warning_dim: "d7afaf"
+    warning: "d7afff"
+    attention: "ff87d7"
+    info: "87afd7"
+    info_bright: "afd7ff"
+    secondary: "d787d7"
+    secondary_bright: "ffafff"
+    cyan: "87d7d7"
+    cyan_bright: "afffff"
+    white: "ffffff"
+    term_bg: 16
+    term_fg: 15
+    term_accent: 147
+    term_accent_alt: 141
+    term_success: 114
+    term_warning: 177
+    term_muted: 244
   mono:
-    dir: 250
-    dir_anchor: 255
-    dir_shortened: 244
-    git_clean: 250
-    git_dirty: 248
-    git_conflict: 203
-    prompt_ok: 250
-    prompt_error: 203
-    ssh_default: 250
-    ssh_prod: 203
-    ssh_stage: 179
-    ssh_dev: 75
+    term_bg: 16
+    term_fg: 15
+    term_accent: 250
+    term_accent_alt: 255
+    term_success: 250
+    term_warning: 248
+    term_muted: 244
 
 theme_aliases:
   violent: violet
