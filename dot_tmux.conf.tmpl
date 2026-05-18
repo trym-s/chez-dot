@@ -102,3 +102,6 @@ set -g display-panes-active-colour "colour{{ $hostAccent }}"
 set -g message-style "bg=#{{ $theme.surface }},fg=#{{ $theme.white }}"
 set -g message-command-style "bg=#{{ $theme.bg }},fg=colour{{ $hostAccent }}"
 set -g mode-style "bg=colour{{ $hostAccent }},fg=colour{{ $theme.term_fg }}"
+set -g default-terminal "tmux-256color"
+set -g update-environment "DISPLAY SSH_ASKPASS SSH_AUTH_SOCK SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY LANG LC_ALL LC_CTYPE"
+
