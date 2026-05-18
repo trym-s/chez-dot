@@ -93,6 +93,9 @@ themes:
     ssh_stage: 179
     ssh_dev: 75
 
+theme_aliases:
+  violent: violet
+
 host_profiles:
   vlhnhp:
     theme: harbor

@@ -296,6 +296,14 @@ theme = "graphite"
 
 Local config is the only machine-local file required for selection.
 
+Unknown theme names fall back to `harbor`. Common aliases can be declared under
+`theme_aliases`:
+
+```yaml
+theme_aliases:
+  violent: violet
+```
+
 ## Review Commands
 
 Use these before applying:
