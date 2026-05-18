@@ -3,6 +3,7 @@ chezmoi
 eza
 fzf
 git
+syncthing
 wl-clipboard
 zoxide
 zsh
