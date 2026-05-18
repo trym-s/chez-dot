@@ -19,5 +19,5 @@ unless you intentionally plan to capture the rendered change back into source.
 
 - `dot_zshrc.tmpl`: generic zsh base loader.
 - `dot_p10k.zsh.tmpl`: prompt layout and host-aware colors.
-- `.chezmoidata.yaml`: shared profiles, colors, and prompt data.
+- `.chezmoidata.yaml`: shared profiles, themes, and shell data.
 - `~/.config/chezmoi/chezmoi.toml`: local machine selection.

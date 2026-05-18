@@ -9,7 +9,8 @@ The repository uses one source tree for all machines.
 
 The first layer manages only zsh and Powerlevel10k. Other terminal or desktop
 configs should be added later using the same pattern: generic template plus
-small profile data.
+small profile data. Theme names are generic system themes, not prompt-specific
+themes, so kitty, tmux, yazi, nvim, and prompt can all consume the same value.
 
 ## Host profiles
 

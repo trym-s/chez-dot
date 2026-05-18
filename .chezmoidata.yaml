@@ -1,4 +1,4 @@
-prompt_themes:
+themes:
   harbor:
     dir: 109
     dir_anchor: 45
@@ -25,16 +25,79 @@ prompt_themes:
     ssh_prod: 203
     ssh_stage: 179
     ssh_dev: 75
+  ember:
+    dir: 180
+    dir_anchor: 214
+    dir_shortened: 244
+    git_clean: 142
+    git_dirty: 214
+    git_conflict: 196
+    prompt_ok: 142
+    prompt_error: 196
+    ssh_default: 214
+    ssh_prod: 196
+    ssh_stage: 208
+    ssh_dev: 143
+  violet:
+    dir: 147
+    dir_anchor: 141
+    dir_shortened: 244
+    git_clean: 114
+    git_dirty: 177
+    git_conflict: 204
+    prompt_ok: 114
+    prompt_error: 204
+    ssh_default: 141
+    ssh_prod: 204
+    ssh_stage: 177
+    ssh_dev: 75
+  mono:
+    dir: 250
+    dir_anchor: 255
+    dir_shortened: 244
+    git_clean: 250
+    git_dirty: 248
+    git_conflict: 203
+    prompt_ok: 250
+    prompt_error: 203
+    ssh_default: 250
+    ssh_prod: 203
+    ssh_stage: 179
+    ssh_dev: 75
 
 host_profiles:
   vlhnhp:
-    prompt_theme: harbor
+    theme: harbor
     machine_role: laptop
     path_roots:
       dev: "~/dev(|/*)"
       config: "~/.config(|/*)"
+  laptop:
+    theme: harbor
+    machine_role: laptop
+    path_roots:
+      dev: "~/dev(|/*)"
+      config: "~/.config(|/*)"
+  workstation:
+    theme: graphite
+    machine_role: workstation
+    path_roots:
+      dev: "~/dev(|/*)"
+      config: "~/.config(|/*)"
+  server:
+    theme: mono
+    machine_role: server
+    path_roots:
+      dev: "~/src(|/*)"
+      config: "~/.config(|/*)"
+  lab:
+    theme: violet
+    machine_role: lab
+    path_roots:
+      dev: "~/dev(|/*)"
+      config: "~/.config(|/*)"
   default:
-    prompt_theme: harbor
+    theme: harbor
     machine_role: workstation
     path_roots:
       dev: "~/dev(|/*)"

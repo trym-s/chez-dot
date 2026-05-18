@@ -1,18 +1,18 @@
 {{- $profileName := "default" -}}
 {{- if hasKey . "host_profile" -}}{{- $profileName = .host_profile -}}{{- end -}}
 {{- $profile := index .host_profiles $profileName -}}
-{{- $themeName := $profile.prompt_theme -}}
-{{- if hasKey . "prompt_theme" -}}{{- $themeName = .prompt_theme -}}{{- end -}}
-{{- $theme := index .prompt_themes $themeName -}}
+{{- $themeName := $profile.theme -}}
+{{- if hasKey . "theme" -}}{{- $themeName = .theme -}}{{- end -}}
+{{- $theme := index .themes $themeName -}}
 # Powerlevel10k config rendered by chezmoi.
 
 typeset -g POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 typeset -g POWERLEVEL9K_MODE=nerdfont-complete
 typeset -g POWERLEVEL9K_ICON_PADDING=none
 
-typeset -g VLH_PROMPT_PROFILE='{{ $profileName }}'
-typeset -g VLH_PROMPT_THEME='{{ $themeName }}'
-typeset -ga VLH_SSH_PALETTE=({{ range .ssh_palette }}{{ . }} {{ end }})
+typeset -g DOT_PROFILE='{{ $profileName }}'
+typeset -g DOT_THEME='{{ $themeName }}'
+typeset -ga DOT_SSH_PALETTE=({{ range .ssh_palette }}{{ . }} {{ end }})
 
 typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
   connection
@@ -87,7 +87,7 @@ function prompt_connection() {
     *stage*|*stg*|*test*) color={{ $theme.ssh_stage }} ;;
     *dev*|*lab*) color={{ $theme.ssh_dev }} ;;
     *)
-      color=${VLH_SSH_PALETTE[$(( ${#host} % $#VLH_SSH_PALETTE + 1 ))]}
+      color=${DOT_SSH_PALETTE[$(( ${#host} % $#DOT_SSH_PALETTE + 1 ))]}
       ;;
   esac
 
