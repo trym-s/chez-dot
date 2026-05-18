@@ -45,6 +45,67 @@ command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 command -v fzf >/dev/null && source /usr/share/fzf/key-bindings.zsh
 command -v fzf >/dev/null && source /usr/share/fzf/completion.zsh
 
+if command -v fzf >/dev/null; then
+  __fzf_files() {
+    if command -v rg >/dev/null; then
+      rg --files --hidden --follow --glob '!.git/*'
+    else
+      find . -path '*/.git/*' -prune -o -type f -print
+    fi
+  }
+
+  __fzf_file_preview='file={}; if command -v bat >/dev/null; then bat --style=numbers --color=always --line-range=:200 -- "$file"; else sed -n "1,200p" -- "$file"; fi'
+
+  fzf-open-nvim() {
+    local selected
+    local -a files
+
+    selected="$(
+      __fzf_files |
+        fzf --multi --height=80% --layout=reverse --border --cycle \
+          --prompt='nvim> ' \
+          --preview="$__fzf_file_preview" \
+          --preview-window='right,60%,border-left'
+    )" || return
+
+    files=("${(f)selected}")
+    (( ${#files[@]} )) || return
+
+    zle -I
+    command nvim -- "${files[@]}"
+    zle reset-prompt
+  }
+  zle -N fzf-open-nvim
+  bindkey '^T' fzf-open-nvim
+
+  fzf-rg-open-nvim() {
+    command -v rg >/dev/null || return
+
+    local selected file line
+
+    selected="$(
+      rg --line-number --column --hidden --smart-case --glob '!.git/*' --color=never '' |
+        fzf --height=80% --layout=reverse --border --cycle \
+          --prompt='rg> ' \
+          --delimiter=':' \
+          --preview='file={1}; line={2}; if command -v bat >/dev/null; then bat --style=numbers --color=always --highlight-line "$line" --line-range "$((line > 8 ? line - 8 : 1)):$((line + 8))" -- "$file"; else sed -n "$((line > 8 ? line - 8 : 1)),$((line + 8))p" -- "$file"; fi' \
+          --preview-window='right,60%,border-left'
+    )" || return
+
+    file="${selected%%:*}"
+    selected="${selected#*:}"
+    line="${selected%%:*}"
+
+    [[ -n "$file" && -n "$line" ]] || return
+
+    zle -I
+    command nvim +"$line" -- "$file"
+    zle reset-prompt
+  }
+  zle -N fzf-rg-open-nvim
+  bindkey '^G' fzf-rg-open-nvim
+fi
+
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#{{ $theme.muted }}'
 [[ -r /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
