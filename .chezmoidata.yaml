@@ -97,9 +97,21 @@ theme_aliases:
   violent: violet
 
 host_profiles:
-  vlhnhp: {}
-  x230: {}
-  ac: {}
+  vlhnhp:
+    machine:
+      icon: '󰌢'
+      label: 'vlhnhp'
+      accent: 81
+  x230:
+    machine:
+      icon: '󰌢'
+      label: 'X230'
+      accent: 167
+  ac:
+    machine:
+      icon: '󰍹'
+      label: 'AC'
+      accent: 141
   default: {}
 
 ssh_palette:

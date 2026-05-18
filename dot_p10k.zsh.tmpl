@@ -94,9 +94,21 @@ typeset -g POWERLEVEL9K_REMOTE_BADGE_LEFT_LEFT_WHITESPACE=' '
 typeset -g POWERLEVEL9K_REMOTE_BADGE_LEFT_RIGHT_WHITESPACE=' '
 typeset -g POWERLEVEL9K_REMOTE_BADGE_PREFIX=' '
 typeset -g POWERLEVEL9K_REMOTE_BADGE_SUFFIX=' '
+{{- if hasKey $profile "machine" }}
+typeset -g _P10K_SSH_ICON='{{ $profile.machine.icon }}'
+typeset -g _P10K_SSH_LABEL='{{ $profile.machine.label }}'
+typeset -g POWERLEVEL9K_REMOTE_BADGE_HOST_BACKGROUND={{ $profile.machine.accent }}
+typeset -g POWERLEVEL9K_REMOTE_BADGE_HOST_FOREGROUND=15
+typeset -g POWERLEVEL9K_REMOTE_BADGE_HOST_CONTENT_EXPANSION='${P9K_CONTENT}'
+{{- end }}
 
 function prompt_remote_badge() {
   [[ -n ${SSH_CONNECTION:-}${SSH_CLIENT:-} ]] || return
+
+  if [[ -n ${_P10K_SSH_LABEL:-} ]]; then
+    p10k segment -s HOST -t "${_P10K_SSH_ICON}  %B${_P10K_SSH_LABEL}%b · ${USER}"
+    return
+  fi
 
   local host=${HOST%%.*}
   local state=DEFAULT
@@ -105,7 +117,6 @@ function prompt_remote_badge() {
     *stage*|*stg*|*test*) state=STAGE ;;
     *dev*|*lab*) state=DEV ;;
   esac
-
   p10k segment -s $state -t "${USER}@${host}"
 }
 
