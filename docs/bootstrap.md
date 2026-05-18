@@ -3,8 +3,8 @@
 On a new Arch machine:
 
 ```sh
-sudo pacman -S --needed chezmoi zsh git fzf zoxide eza bat wl-clipboard
-yay -S --needed zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search zsh-theme-powerlevel10k-git
+xargs -a ~/.local/share/chezmoi/packages/pacman.txt sudo pacman -S --needed
+xargs -a ~/.local/share/chezmoi/packages/yay.txt yay -S --needed
 ```
 
 Initialize this repository:

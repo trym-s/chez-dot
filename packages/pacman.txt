@@ -1,0 +1,12 @@
+bat
+chezmoi
+eza
+fzf
+git
+wl-clipboard
+zoxide
+zsh
+zsh-autosuggestions
+zsh-completions
+zsh-history-substring-search
+zsh-syntax-highlighting
