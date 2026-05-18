@@ -13,6 +13,8 @@ typeset -g POWERLEVEL9K_ICON_PADDING=none
 typeset -g DOT_PROFILE='{{ $profileName }}'
 typeset -g DOT_THEME='{{ $themeName }}'
 typeset -ga DOT_SSH_PALETTE=({{ range .ssh_palette }}{{ . }} {{ end }})
+typeset -g DOT_SSH_ACTIVE_FOREGROUND=16
+typeset -g DOT_SSH_ACTIVE_BACKGROUND={{ $theme.ssh_default }}
 
 typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
   connection
@@ -81,17 +83,18 @@ function prompt_connection() {
   [[ -n ${SSH_CONNECTION:-}${SSH_CLIENT:-} ]] || return
 
   local host=${HOST%%.*}
-  local color={{ $theme.ssh_default }}
+  local bg={{ $theme.ssh_default }}
   case ${host:l} in
-    *prod*|*prd*|*live*) color={{ $theme.ssh_prod }} ;;
-    *stage*|*stg*|*test*) color={{ $theme.ssh_stage }} ;;
-    *dev*|*lab*) color={{ $theme.ssh_dev }} ;;
+    *prod*|*prd*|*live*) bg={{ $theme.ssh_prod }} ;;
+    *stage*|*stg*|*test*) bg={{ $theme.ssh_stage }} ;;
+    *dev*|*lab*) bg={{ $theme.ssh_dev }} ;;
     *)
-      color=${DOT_SSH_PALETTE[$(( ${#host} % $#DOT_SSH_PALETTE + 1 ))]}
+      bg=${DOT_SSH_PALETTE[$(( ${#host} % $#DOT_SSH_PALETTE + 1 ))]}
       ;;
   esac
+  DOT_SSH_ACTIVE_BACKGROUND=$bg
 
-  p10k segment -f $color -i '󰣀' -t "${USER}@${host}"
+  p10k segment -f $DOT_SSH_ACTIVE_FOREGROUND -b $bg -i '󰣀' -t " ${USER}@${host} "
 }
 
 function my_git_formatter() {
