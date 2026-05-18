@@ -147,6 +147,52 @@ themes:
 theme_aliases:
   violent: violet
 
+hypr_appearance_profiles:
+  compact:
+    gaps_in: 0
+    gaps_out: 0
+    border_size: 3
+    rounding: 0
+    shadow:
+      enabled: false
+      range: 18
+      render_power: 2
+      color: "rgba(00000055)"
+    blur:
+      enabled: false
+      size: 5
+      passes: 2
+      vibrancy: "0.16"
+    animations:
+      enabled: false
+      bezier: "workbench, 0.18, 0.9, 0.2, 1.0"
+      windows: "windows, 1, 4, workbench, popin 87%"
+      border: "border, 1, 5, workbench"
+      fade: "fade, 1, 4, workbench"
+      workspaces: "workspaces, 1, 4, workbench, slide"
+  hypr:
+    gaps_in: 4
+    gaps_out: 8
+    border_size: 2
+    rounding: 8
+    shadow:
+      enabled: true
+      range: 24
+      render_power: 3
+      color: "rgba(00000066)"
+    blur:
+      enabled: true
+      size: 7
+      passes: 3
+      vibrancy: "0.18"
+    animations:
+      enabled: true
+      bezier: "workbench, 0.16, 1, 0.3, 1"
+      windows: "windows, 1, 5, workbench, popin 88%"
+      border: "border, 1, 6, workbench"
+      fade: "fade, 1, 5, workbench"
+      workspaces: "workspaces, 1, 5, workbench, slide"
+
 host_profiles:
   vlhnhp:
     machine:
