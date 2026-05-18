@@ -66,8 +66,8 @@ themes:
     white: "ffffff"
     term_bg: 16
     term_fg: 15
-    term_accent: 110
-    term_accent_alt: 81
+    term_accent: 250
+    term_accent_alt: 255
     term_success: 114
     term_warning: 179
     term_muted: 244

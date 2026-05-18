@@ -114,7 +114,7 @@
 {{- if hasKey $profile "machine" }}
   typeset -g _P10K_SSH_ICON='{{ $profile.machine.icon }}'
   typeset -g _P10K_SSH_LABEL='{{ $profile.machine.label }}'
-  typeset -g POWERLEVEL9K_REMOTE_BADGE_HOST_BACKGROUND={{ $profile.machine.accent }}
+  typeset -g POWERLEVEL9K_REMOTE_BADGE_HOST_BACKGROUND={{ $theme.term_accent }}
   typeset -g POWERLEVEL9K_REMOTE_BADGE_HOST_FOREGROUND={{ $theme.term_fg }}
   typeset -g POWERLEVEL9K_REMOTE_BADGE_HOST_CONTENT_EXPANSION='${P9K_CONTENT}'
 {{- end }}
@@ -143,6 +143,7 @@
 
   function prompt_remote_badge() {
     [[ -n ${SSH_CONNECTION:-}${SSH_CLIENT:-} ]] || return
+    [[ -z ${WAYLAND_DISPLAY:-}${DISPLAY:-} ]] || return
 
     if [[ -n ${_P10K_SSH_LABEL:-} ]]; then
       p10k segment -s HOST -t "${_P10K_SSH_ICON}  %B${_P10K_SSH_LABEL}%b · ${USER}"
