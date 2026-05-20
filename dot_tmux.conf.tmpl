@@ -14,7 +14,6 @@
 {{- if hasKey $profile "machine" -}}
 {{- $hostIcon = $profile.machine.icon -}}
 {{- $hostLabel = $profile.machine.label -}}
-{{- $hostAccent = $profile.machine.accent -}}
 {{- end -}}
 set -g default-terminal "tmux-256color"
 set -as terminal-features ",xterm-kitty:RGB"

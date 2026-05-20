@@ -1,0 +1,110 @@
+{{- $themeName := "rose" -}}
+{{- if hasKey . "theme" -}}{{- $themeName = .theme -}}{{- end -}}
+{{- if and (not (hasKey .themes $themeName)) (hasKey .theme_aliases $themeName) -}}{{- $themeName = index .theme_aliases $themeName -}}{{- end -}}
+{{- if not (hasKey .themes $themeName) -}}{{- $themeName = "rose" -}}{{- end -}}
+{{- $theme := index .themes $themeName -}}
+[app]
+overall = {}
+
+[mgr]
+cwd             = { fg = "#{{ $theme.accent_alt }}", bold = true }
+find_keyword    = { fg = "#{{ $theme.bg }}", bg = "#{{ $theme.accent }}", bold = true }
+find_position   = { fg = "#{{ $theme.secondary_bright }}", bold = true }
+symlink_target  = { fg = "#{{ $theme.cyan_bright }}", italic = true }
+marker_copied   = { fg = "#{{ $theme.success_bright }}", bg = "#{{ $theme.surface }}", bold = true }
+marker_cut      = { fg = "#{{ $theme.danger }}", bg = "#{{ $theme.surface }}", bold = true }
+marker_marked   = { fg = "#{{ $theme.warning }}", bg = "#{{ $theme.surface }}", bold = true }
+marker_selected = { fg = "#{{ $theme.bg }}", bg = "#{{ $theme.accent }}", bold = true }
+count_copied    = { fg = "#{{ $theme.success_bright }}", bold = true }
+count_cut       = { fg = "#{{ $theme.danger }}", bold = true }
+count_selected  = { fg = "#{{ $theme.accent_alt }}", bold = true }
+border_symbol   = "│"
+border_style    = { fg = "#{{ $theme.surface_alt }}" }
+
+[indicator]
+parent  = { fg = "#{{ $theme.surface_alt }}" }
+current = { fg = "#{{ $theme.bg }}", bg = "#{{ $theme.accent }}", bold = true }
+preview = { fg = "#{{ $theme.accent }}" }
+padding = { open = "█", close = "█" }
+
+[tabs]
+active    = { fg = "#{{ $theme.bg }}", bg = "#{{ $theme.accent }}", bold = true }
+inactive  = { fg = "#{{ $theme.subtle }}", bg = "#{{ $theme.surface_dark }}" }
+sep_inner = { open = "", close = "" }
+sep_outer = { open = "", close = "" }
+
+[mode]
+normal_main = { fg = "#{{ $theme.bg }}", bg = "#{{ $theme.accent }}", bold = true }
+normal_alt  = { fg = "#{{ $theme.accent }}", bg = "#{{ $theme.surface_dark }}" }
+select_main = { fg = "#{{ $theme.bg }}", bg = "#{{ $theme.warning }}", bold = true }
+select_alt  = { fg = "#{{ $theme.warning }}", bg = "#{{ $theme.surface_dark }}" }
+unset_main  = { fg = "#{{ $theme.bg }}", bg = "#{{ $theme.secondary_bright }}", bold = true }
+unset_alt   = { fg = "#{{ $theme.secondary_bright }}", bg = "#{{ $theme.surface_dark }}" }
+
+[status]
+overall         = { fg = "#{{ $theme.fg }}", bg = "#{{ $theme.bg }}" }
+sep_left        = { open = "", close = "" }
+sep_right       = { open = "", close = "" }
+perm_type       = { fg = "#{{ $theme.accent }}" }
+perm_read       = { fg = "#{{ $theme.success_bright }}" }
+perm_write      = { fg = "#{{ $theme.warning }}" }
+perm_exec       = { fg = "#{{ $theme.danger }}" }
+perm_sep        = { fg = "#{{ $theme.surface_alt }}" }
+progress_label  = { fg = "#{{ $theme.accent_alt }}", bold = true }
+progress_normal = { fg = "#{{ $theme.accent }}", bg = "#{{ $theme.surface }}" }
+progress_error  = { fg = "#{{ $theme.danger }}", bg = "#{{ $theme.surface }}" }
+
+[which]
+mask            = { bg = "#{{ $theme.bg }}" }
+cand            = { fg = "#{{ $theme.accent }}", bold = true }
+rest            = { fg = "#{{ $theme.subtle }}" }
+desc            = { fg = "#{{ $theme.fg }}" }
+separator       = "  "
+separator_style = { fg = "#{{ $theme.surface_alt }}" }
+
+[filetype]
+rules = [
+  { url = "*/", fg = "#{{ $theme.cyan_bright }}", bold = true },
+  { mime = "text/*", fg = "#{{ $theme.fg }}" },
+  { mime = "inode/empty", fg = "#{{ $theme.muted }}", italic = true },
+  { mime = "image/*", fg = "#{{ $theme.secondary_bright }}" },
+  { mime = "{audio,video}/*", fg = "#{{ $theme.warning }}" },
+  { mime = "application/{json,ndjson,javascript,wine-extension-ini,xml,toml,yaml,x-yaml}", fg = "#{{ $theme.accent_alt }}" },
+  { mime = "application/pdf", fg = "#{{ $theme.danger }}" },
+  { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#{{ $theme.warning }}" },
+  { url = "*", is = "exec", fg = "#{{ $theme.success_bright }}", bold = true },
+  { url = "*", is = "link", fg = "#{{ $theme.cyan_bright }}", italic = true },
+  { url = "*", is = "orphan", fg = "#{{ $theme.danger }}", bold = true },
+  { url = "*", fg = "#{{ $theme.subtle }}" },
+]
+
+[icon]
+prepend_dirs = [
+  { name = ".config", text = "", fg = "#{{ $theme.accent }}" },
+  { name = "src",     text = "󰴉", fg = "#{{ $theme.accent }}" },
+  { name = "docs",    text = "󰈙", fg = "#{{ $theme.success_bright }}" },
+  { name = "assets",  text = "󰉏", fg = "#{{ $theme.secondary_bright }}" },
+]
+
+prepend_files = [
+  { name = ".env",       text = "󱁿", fg = "#{{ $theme.warning }}" },
+  { name = "README.md",  text = "󰂺", fg = "#{{ $theme.success_bright }}" },
+  { name = "LICENSE",    text = "󰿃", fg = "#{{ $theme.accent }}" },
+]
+
+prepend_exts = [
+  { name = "lua",  text = "", fg = "#{{ $theme.accent }}" },
+  { name = "rs",   text = "", fg = "#{{ $theme.danger }}" },
+  { name = "go",   text = "", fg = "#{{ $theme.cyan_bright }}" },
+  { name = "py",   text = "", fg = "#{{ $theme.warning }}" },
+  { name = "js",   text = "", fg = "#{{ $theme.warning }}" },
+  { name = "ts",   text = "", fg = "#{{ $theme.accent }}" },
+  { name = "tsx",  text = "", fg = "#{{ $theme.cyan_bright }}" },
+  { name = "json", text = "", fg = "#{{ $theme.accent_alt }}" },
+  { name = "toml", text = "", fg = "#{{ $theme.accent }}" },
+  { name = "yaml", text = "", fg = "#{{ $theme.secondary_bright }}" },
+  { name = "md",   text = "", fg = "#{{ $theme.success_bright }}" },
+  { name = "png",  text = "󰸭", fg = "#{{ $theme.secondary_bright }}" },
+  { name = "jpg",  text = "󰈥", fg = "#{{ $theme.secondary_bright }}" },
+  { name = "zip",  text = "", fg = "#{{ $theme.warning }}" },
+]

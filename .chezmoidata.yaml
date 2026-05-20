@@ -12,7 +12,7 @@ themes:
     subtle: "858585"
     accent: "e11d48"
     accent_alt: "ff4d6d"
-    danger: "e11d48"
+    danger: "ff5f87"
     success: "87af5f"
     success_bright: "a6d189"
     warning_dim: "d7af5f"
@@ -25,6 +25,7 @@ themes:
     cyan: "5fafd7"
     cyan_bright: "89dceb"
     white: "ffffff"
+    syntax_red: "ff6b8a"
     term_bg: 16
     term_fg: 15
     term_accent: 167
@@ -164,6 +165,7 @@ themes:
     term_success: 114
     term_warning: 177
     term_muted: 244
+
   mono:
     font_family: "JetBrainsMono Nerd Font"
     terminal_font_size: "10.5"
@@ -190,6 +192,12 @@ themes:
     cyan: "c2c2c2"
     cyan_bright: "f0f0f0"
     white: "ffffff"
+    syntax_green: "9bbf9b"
+    syntax_yellow: "c2ad79"
+    syntax_blue: "9cb7cf"
+    syntax_magenta: "b6a3c8"
+    syntax_red: "d49a9a"
+    syntax_cyan: "8fbfbd"
     term_bg: 16
     term_fg: 15
     term_accent: 250

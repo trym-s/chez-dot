@@ -8,7 +8,6 @@
 {{- if not (hasKey .themes $themeName) -}}{{- $themeName = "harbor" -}}{{- end -}}
 {{- $theme := index .themes $themeName -}}
 {{- $hostAccent := $theme.term_accent -}}
-{{- if hasKey $profile "machine" -}}{{- $hostAccent = $profile.machine.accent -}}{{- end -}}
 # Powerlevel10k config rendered by chezmoi.
 
 'builtin' 'local' '-a' 'p10k_config_opts'

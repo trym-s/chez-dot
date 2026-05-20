@@ -25,9 +25,10 @@ return {
   danger       = "#{{ $theme.danger }}",
   white        = "#{{ $theme.white }}",
 
-  green        = "#{{ $theme.success_bright }}",
-  yellow       = "#{{ $theme.warning }}",
-  blue         = "#{{ $theme.info_bright }}",
-  magenta      = "#{{ $theme.secondary_bright }}",
-  red          = "#{{ $theme.danger }}",
+  green        = "#{{ if hasKey $theme "syntax_green" }}{{ $theme.syntax_green }}{{ else }}{{ $theme.success_bright }}{{ end }}",
+  yellow       = "#{{ if hasKey $theme "syntax_yellow" }}{{ $theme.syntax_yellow }}{{ else }}{{ $theme.warning }}{{ end }}",
+  blue         = "#{{ if hasKey $theme "syntax_blue" }}{{ $theme.syntax_blue }}{{ else }}{{ $theme.info_bright }}{{ end }}",
+  magenta      = "#{{ if hasKey $theme "syntax_magenta" }}{{ $theme.syntax_magenta }}{{ else }}{{ $theme.secondary_bright }}{{ end }}",
+  red          = "#{{ if hasKey $theme "syntax_red" }}{{ $theme.syntax_red }}{{ else }}{{ $theme.danger }}{{ end }}",
+  syntax_cyan  = "#{{ if hasKey $theme "syntax_cyan" }}{{ $theme.syntax_cyan }}{{ else }}{{ $theme.cyan_bright }}{{ end }}",
 }
