@@ -81,14 +81,18 @@
   typeset -g POWERLEVEL9K_DIR_CONTENT_EXPANSION='%B${P9K_CONTENT}%b'
   typeset -g POWERLEVEL9K_DIR_CLASSES=(
     '~/dev(|/*)'                        DEV     ''
+    '~/Cloud(|/*)'                      CLOUD   ''
     '~/.config(|/*)'                    CONFIG  ''
-    '~(|/*)'                            HOME    ''
+    '~'                                 HOME    ''
     '/etc(|/*)'                         ETC     ''
     '*'                                 DEFAULT ''
   )
   typeset -g POWERLEVEL9K_DIR_DEV_VISUAL_IDENTIFIER_EXPANSION='󰲋'
   typeset -g POWERLEVEL9K_DIR_DEV_FOREGROUND={{ $hostAccent }}
   typeset -g POWERLEVEL9K_DIR_DEV_ANCHOR_FOREGROUND={{ $hostAccent }}
+  typeset -g POWERLEVEL9K_DIR_CLOUD_VISUAL_IDENTIFIER_EXPANSION='󰅧'
+  typeset -g POWERLEVEL9K_DIR_CLOUD_FOREGROUND={{ $hostAccent }}
+  typeset -g POWERLEVEL9K_DIR_CLOUD_ANCHOR_FOREGROUND={{ $hostAccent }}
   typeset -g POWERLEVEL9K_DIR_CONFIG_VISUAL_IDENTIFIER_EXPANSION=''
   typeset -g POWERLEVEL9K_DIR_CONFIG_FOREGROUND={{ $hostAccent }}
   typeset -g POWERLEVEL9K_DIR_CONFIG_ANCHOR_FOREGROUND={{ $hostAccent }}

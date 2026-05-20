@@ -1,0 +1,14 @@
+[Unit]
+Description=SSHFS ac home
+After=network-online.target
+Wants=network-online.target
+
+[Mount]
+What=ac:/home/vlhnac
+Where=/home/vlhnx230/mnt/ssh/ac/home
+Type=fuse.sshfs
+Options=rw,_netdev,reconnect,ServerAliveInterval=15,ServerAliveCountMax=3
+TimeoutSec=30
+
+[Install]
+WantedBy=default.target

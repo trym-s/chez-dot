@@ -89,7 +89,7 @@ set -g status-left "#[bg=colour{{ $hostAccent }},fg=colour{{ $theme.term_fg }},b
 set -g status-right "#[fg=#{{ $theme.muted }}]󰖲 #{session_windows} #[fg=#{{ $theme.surface_alt }}]| #[fg=#{{ $theme.subtle }}]󰍹 #{session_attached} "
 set -g window-status-separator ""
 set -g window-status-format "#[bg=#{{ $theme.bg }},fg=#{{ $theme.muted }}] #I #[fg=#{{ $theme.subtle }}]#W "
-set -g window-status-current-format "#[bg=#{{ $theme.surface }},fg=#{{ $theme.white }},bold] #I #[fg=colour{{ $hostAccent }}]#W "
+set -g window-status-current-format "#[bg=#{{ $theme.surface }},fg=#{{ $theme.white }},bold] #I #{?#{==:#{pane_current_command},ssh},#[bg=colour197,fg=colour15,bold] VPS #[bg=#{{ $theme.surface }},fg=#{{ $theme.white }}],#{?#{m:*/mnt/vps*,#{pane_current_path}},#[fg=colour221]LOCAL,#[fg=colour{{ $hostAccent }}]#W}} "
 set -g pane-border-style "fg=#{{ $theme.surface }}"
 set -g pane-active-border-style "fg=colour{{ $hostAccent }}"
 set -g pane-border-indicators off
@@ -97,7 +97,7 @@ set -g pane-border-lines simple
 set -g window-style "bg=default"
 set -g window-active-style "bg=default"
 set -g pane-border-status top
-set -g pane-border-format "#{?pane_active,#[bg=colour{{ $hostAccent }},fg=colour{{ $theme.term_fg }},bold],#[fg=#{{ $theme.muted }}]} #{pane_current_command} "
+set -g pane-border-format "#{?pane_active,#{?#{==:#{pane_current_command},ssh},#[bg=colour197,fg=colour15,bold] VPS #[bg=default,fg=#{{ $theme.muted }}]ssh,#{?#{m:*/mnt/vps*,#{pane_current_path}},#[fg=colour221,bold] LOCAL #[fg=#{{ $theme.muted }}]sshfs,#[fg=colour{{ $hostAccent }},bold] #{pane_current_command} }},#[fg=#{{ $theme.muted }}] #{pane_current_command} }"
 set -g display-panes-colour "#{{ $theme.muted }}"
 set -g display-panes-active-colour "colour{{ $hostAccent }}"
 set -g message-style "bg=#{{ $theme.surface }},fg=#{{ $theme.white }}"
