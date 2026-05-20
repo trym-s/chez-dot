@@ -1,0 +1,9 @@
+[Unit]
+Description=Bisync shared_local with Google Drive Cloud folder
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStartPre=/usr/bin/mkdir -p %h/mnt/personal/shared_local
+ExecStart=/usr/bin/rclone bisync %h/mnt/personal/shared_local gcloud:Cloud --create-empty-src-dirs --resilient --recover

@@ -1,0 +1,56 @@
+#!/bin/sh
+set -eu
+
+old_units="
+home-vlhnx230-mnt-cloud-google_drive_ravelihan.mount
+home-vlhnx230-mnt-ssh-ac-home.mount
+home-vlhnx230-mnt-ssh-envy-home.mount
+home-vlhnx230-mnt-cloud-gdrive.mount
+mnt-cloud-google-drive-ravelihan.service
+mnt-ssh-ac-home.service
+mnt-ssh-envy-home.service
+hc-sshfs-home-deploy.service
+hc-sshfs-etc.service
+hc-sshfs-opt.service
+hc-sshfs-var-lib.service
+"
+
+common_units="
+mnt-rclone@google-drive-ravelihan.service
+mnt-sshfs@vps-home-deploy.service
+mnt-sshfs@vps-etc-hc.service
+mnt-sshfs@vps-opt-hc.service
+mnt-sshfs@vps-var-lib-hc.service
+rclone-gcloud-bisync-shared-local.timer
+"
+
+case "{{ .host_profile }}" in
+  ac)
+    peer_units="mnt-sshfs@x230-home.service mnt-sshfs@envy-home.service"
+    ;;
+  vlhnhp|envy)
+    peer_units="mnt-sshfs@x230-home.service mnt-sshfs@ac-home.service"
+    ;;
+  x230)
+    peer_units="mnt-sshfs@ac-home.service mnt-sshfs@envy-home.service"
+    ;;
+  *)
+    peer_units="mnt-sshfs@x230-home.service mnt-sshfs@ac-home.service mnt-sshfs@envy-home.service"
+    ;;
+esac
+
+new_units="$common_units $peer_units"
+
+systemctl --user daemon-reload
+
+for unit in $old_units; do
+  systemctl --user disable --now "$unit" >/dev/null 2>&1 || true
+done
+
+systemctl --user enable $new_units
+
+for unit in $new_units; do
+  if ! systemctl --user start "$unit"; then
+    printf '%s\n' "warning: could not start $unit; check credentials/network and run: systemctl --user start $unit" >&2
+  fi
+done

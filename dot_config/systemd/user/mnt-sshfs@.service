@@ -1,0 +1,14 @@
+[Unit]
+Description=SSHFS mount %i
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+EnvironmentFile=%h/.config/mnt/sshfs/%i.env
+ExecStartPre=/usr/bin/mkdir -p %h/${MOUNT_PATH}
+ExecStart=/usr/bin/sshfs -f -F %h/.ssh/config ${REMOTE} %h/${MOUNT_PATH} -o rw,reconnect,ServerAliveInterval=15,ServerAliveCountMax=3
+ExecStop=/usr/bin/fusermount3 -u %h/${MOUNT_PATH}
+
+[Install]
+WantedBy=default.target

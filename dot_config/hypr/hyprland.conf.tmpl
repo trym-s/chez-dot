@@ -1,7 +1,13 @@
+{{- $profileName := "default" -}}
+{{- if hasKey . "host_profile" -}}{{- $profileName = .host_profile -}}{{- end -}}
+{{- if not (hasKey .host_profiles $profileName) -}}{{- $profileName = "default" -}}{{- end -}}
+{{- $profile := index .host_profiles $profileName -}}
 source = ~/.config/hypr/conf.d/variables.conf
 source = ~/.config/hypr/conf.d/monitors.conf
 source = ~/.config/hypr/conf.d/env.conf
+{{- if $profile.hypr.nvidia_env }}
 source = ~/.config/hypr/conf.d/nvidia.conf
+{{- end }}
 source = ~/.config/hypr/conf.d/input.conf
 source = ~/.config/hypr/conf.d/appearance.conf
 source = ~/.config/hypr/conf.d/autostart.conf

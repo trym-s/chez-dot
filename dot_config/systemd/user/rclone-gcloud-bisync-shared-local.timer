@@ -1,0 +1,11 @@
+[Unit]
+Description=Run shared_local Google Drive bisync every 2 minutes
+
+[Timer]
+OnBootSec=30s
+OnUnitActiveSec=2min
+Unit=rclone-gcloud-bisync-shared-local.service
+
+[Install]
+WantedBy=timers.target
+
