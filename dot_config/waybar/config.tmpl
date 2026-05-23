@@ -1,0 +1,64 @@
+{{- $profileName := "default" -}}
+{{- if hasKey . "host_profile" -}}{{- $profileName = .host_profile -}}{{- end -}}
+{{- if not (hasKey .host_profiles $profileName) -}}{{- $profileName = "default" -}}{{- end -}}
+{{- $profile := index .host_profiles $profileName -}}
+{{- $profileWaybar := dict -}}
+{{- if hasKey $profile "waybar" -}}{{- $profileWaybar = index $profile "waybar" -}}{{- end -}}
+{{- $layoutName := "laptop_minimal" -}}
+{{- if hasKey $profileWaybar "layout" -}}{{- $layoutName = index $profileWaybar "layout" -}}{{- end -}}
+{{- if not (hasKey .waybar_layouts $layoutName) -}}{{- $layoutName = "laptop_minimal" -}}{{- end -}}
+{{- $layout := index .waybar_layouts $layoutName -}}
+{{- $viewProfileName := "icon" -}}
+{{- if hasKey $profileWaybar "view_profile" -}}{{- $viewProfileName = index $profileWaybar "view_profile" -}}{{- end -}}
+{{- if not (hasKey .waybar_view_profiles $viewProfileName) -}}{{- $viewProfileName = "icon" -}}{{- end -}}
+{{- $viewProfile := index .waybar_view_profiles $viewProfileName -}}
+{{- $defaultView := $viewProfile.default -}}
+{{- $viewProfileModules := dict -}}
+{{- if hasKey $viewProfile "modules" -}}{{- $viewProfileModules = index $viewProfile "modules" -}}{{- end -}}
+{{- $hostModuleViews := dict -}}
+{{- if hasKey $profileWaybar "module_views" -}}{{- $hostModuleViews = index $profileWaybar "module_views" -}}{{- end -}}
+{{- $left := list -}}
+{{- $center := list -}}
+{{- $right := list -}}
+{{- $used := list -}}
+{{- range $key := $layout.left -}}
+{{- $module := index $.waybar_modules $key -}}
+{{- $left = append $left $module.id -}}
+{{- $used = append $used $key -}}
+{{- end -}}
+{{- range $key := $layout.center -}}
+{{- $module := index $.waybar_modules $key -}}
+{{- $center = append $center $module.id -}}
+{{- $used = append $used $key -}}
+{{- end -}}
+{{- range $key := $layout.right -}}
+{{- $module := index $.waybar_modules $key -}}
+{{- $right = append $right $module.id -}}
+{{- $used = append $used $key -}}
+{{- end -}}
+{
+  "layer": "top",
+  "position": "top",
+  "height": {{ $layout.height }},
+  "spacing": {{ $layout.spacing }},
+  "margin-top": {{ $layout.margin_top }},
+  "margin-left": {{ $layout.margin_left }},
+  "margin-right": {{ $layout.margin_right }},
+  "modules-left": {{ $left | toJson }},
+  "modules-center": {{ $center | toJson }},
+  "modules-right": {{ $right | toJson }}
+{{- range $key := $used }}
+{{- $module := index $.waybar_modules $key -}}
+{{- $config := dict -}}
+{{- if hasKey $module "config" -}}
+{{- $config = index $module "config" -}}
+{{- else -}}
+{{- $view := $defaultView -}}
+{{- if hasKey $viewProfileModules $key -}}{{- $view = index $viewProfileModules $key -}}{{- end -}}
+{{- if hasKey $hostModuleViews $key -}}{{- $view = index $hostModuleViews $key -}}{{- end -}}
+{{- if not (hasKey $module.views $view) -}}{{- $view = "icon" -}}{{- end -}}
+{{- $config = index $module.views $view -}}
+{{- end -}},
+  "{{ $module.id }}": {{ $config | toPrettyJson | nindent 2 | trim }}
+{{- end }}
+}

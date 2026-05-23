@@ -1,0 +1,173 @@
+{{- $profileName := "default" -}}
+{{- if hasKey . "host_profile" -}}{{- $profileName = .host_profile -}}{{- end -}}
+{{- if not (hasKey .host_profiles $profileName) -}}{{- $profileName = "default" -}}{{- end -}}
+{{- $profile := index .host_profiles $profileName -}}
+{{- $profileWaybar := dict -}}
+{{- if hasKey $profile "waybar" -}}{{- $profileWaybar = index $profile "waybar" -}}{{- end -}}
+{{- $themeName := "rose" -}}
+{{- if hasKey . "theme" -}}{{- $themeName = .theme -}}{{- end -}}
+{{- if and (not (hasKey .themes $themeName)) (hasKey .theme_aliases $themeName) -}}{{- $themeName = index .theme_aliases $themeName -}}{{- end -}}
+{{- if not (hasKey .themes $themeName) -}}{{- $themeName = "rose" -}}{{- end -}}
+{{- $theme := index .themes $themeName -}}
+{{- $styleName := "flat" -}}
+{{- if hasKey $profileWaybar "style" -}}{{- $styleName = index $profileWaybar "style" -}}{{- end -}}
+{{- if not (hasKey .waybar_styles $styleName) -}}{{- $styleName = "flat" -}}{{- end -}}
+{{- $style := index .waybar_styles $styleName -}}
+* {
+  border: none;
+  border-radius: {{ $style.radius }}px;
+  font-family: "{{ $theme.font_family }}", "JetBrains Mono", monospace;
+  font-size: 12px;
+  min-height: 0;
+}
+
+window#waybar {
+  background: #{{ $theme.bg }};
+  color: #{{ $theme.fg }};
+  border-bottom: {{ $style.bottom_border_width }}px solid #{{ $theme.accent }};
+}
+
+{{- if $style.boxed_modules }}
+#workspaces,
+#clock,
+#pulseaudio,
+#backlight,
+#battery,
+#custom-updates,
+#custom-player,
+#custom-cpu,
+#custom-memory,
+#custom-temperature,
+#custom-network,
+#tray {
+  background: #{{ $theme.bg }};
+  border: {{ $style.border_width }}px solid #{{ $theme.surface_alt }};
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.20);
+}
+
+#workspaces {
+  padding: 3px;
+}
+{{- end }}
+
+#workspaces button {
+  margin: 0 1px;
+  padding: 0 7px;
+  color: #{{ $theme.subtle }};
+  background: transparent;
+}
+
+#workspaces button.active {
+  color: #{{ $theme.white }};
+  background: #{{ $theme.surface }};
+{{- if $style.boxed_modules }}
+  box-shadow: inset 0 -2px #{{ $theme.accent }}, inset 0 0 0 1px #{{ $theme.surface_alt }};
+{{- end }}
+}
+
+#workspaces button.urgent,
+#battery.critical {
+  color: #{{ $theme.white }};
+  background: #{{ $theme.danger }};
+}
+
+#clock,
+#pulseaudio,
+#backlight,
+#battery,
+#custom-updates,
+#custom-player,
+#custom-cpu,
+#custom-memory,
+#custom-temperature,
+#custom-network,
+#tray {
+  padding: 0 7px;
+  color: #{{ $theme.fg }};
+}
+
+#clock {
+  color: #{{ $theme.white }};
+  font-weight: 700;
+  border-color: #{{ $theme.accent }};
+}
+
+#pulseaudio {
+  color: #{{ $theme.success }};
+}
+
+#custom-player {
+  color: #{{ $theme.fg }};
+  border-color: #{{ $theme.surface }};
+  min-width: 0;
+}
+
+#custom-player.playing {
+  color: #{{ $theme.info_bright }};
+  border-color: #{{ $theme.accent }};
+}
+
+#custom-player.paused {
+  color: #{{ $theme.subtle }};
+}
+
+#custom-updates {
+  color: #{{ $theme.cyan }};
+}
+
+#custom-updates.available {
+  color: #{{ $theme.bg }};
+  background: #{{ $theme.accent }};
+  border-color: #{{ $theme.info_bright }};
+  font-weight: 700;
+}
+
+#custom-updates.error,
+#custom-temperature.critical,
+#battery.critical {
+  color: #{{ $theme.white }};
+  background: #{{ $theme.danger }};
+  border-color: #{{ $theme.danger }};
+}
+
+#backlight,
+#custom-temperature {
+  color: #{{ $theme.warning }};
+}
+
+#custom-network {
+  color: #{{ $theme.cyan }};
+}
+
+#custom-network.offline {
+  color: #{{ $theme.muted }};
+}
+
+#custom-cpu {
+  color: #{{ $theme.info_bright }};
+}
+
+#custom-cpu.warm,
+#custom-memory.warm,
+#custom-temperature.warm,
+#battery.warning {
+  color: #{{ $theme.warning }};
+}
+
+#custom-memory {
+  color: #{{ $theme.secondary_bright }};
+}
+
+#custom-memory.high,
+#custom-temperature.hot {
+  color: #{{ $theme.danger }};
+}
+
+#custom-temperature.chill,
+#custom-temperature.cool {
+  color: #{{ $theme.success_bright }};
+}
+
+#tray {
+  color: #{{ $theme.subtle }};
+}

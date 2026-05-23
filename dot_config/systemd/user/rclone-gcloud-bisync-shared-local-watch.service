@@ -1,0 +1,13 @@
+[Unit]
+Description=Watch shared_local and trigger Google Drive bisync quickly
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/rclone-bisync-shared-local-watch
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=default.target

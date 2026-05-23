@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+watch_dir="${HOME}/mnt/personal/shared_local"
+unit="rclone-gcloud-bisync-shared-local.service"
+quiet_window="${RCLONE_BISYNC_QUIET_WINDOW:-3}"
+
+mkdir -p "$watch_dir"
+
+trigger_sync() {
+  systemctl --user start "$unit" || true
+}
+
+trigger_sync
+
+while true; do
+  inotifywait -r -q \
+    -e close_write,create,delete,move,attrib \
+    --exclude '(^|/)(\.git|\.stversions|\.Trash|\.Trash-[^/]+|\.~.*|.*\.swp|.*\.tmp)$' \
+    "$watch_dir" >/dev/null 2>&1 || {
+      sleep 5
+      continue
+    }
+
+  sleep "$quiet_window"
+  trigger_sync
+done

@@ -1,0 +1,26 @@
+#!/bin/sh
+
+view="icon"
+[ "$1" = "--view" ] && view="${2:-icon}"
+
+escape() {
+  printf '%s' "$1" | sed 's/\\/\\\\/g; s/"/\\"/g'
+}
+
+updates="$(checkupdates 2>/tmp/waybar-checkupdates.err)"
+code=$?
+
+if [ "$code" -ne 0 ]; then
+  err="$(escape "$(cat /tmp/waybar-checkupdates.err 2>/dev/null)")"
+  printf '{"text":"","tooltip":"%s","class":"clean"}\n' "${err:-checkupdates failed}"
+  exit 0
+fi
+
+count="$(printf '%s\n' "$updates" | sed '/^$/d' | wc -l)"
+if [ "$count" -eq 0 ]; then
+  printf '{"text":"","tooltip":"","class":"clean"}\n'
+else
+  tooltip="$(escape "$updates")"
+  [ "$view" = "text" ] && text="UPD ${count}" || text="󰏗 ${count}"
+  printf '{"text":"%s","tooltip":"%s","class":"available"}\n' "$text" "$tooltip"
+fi

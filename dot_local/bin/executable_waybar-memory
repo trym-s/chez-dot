@@ -1,0 +1,23 @@
+#!/bin/sh
+
+view="icon"
+[ "$1" = "--view" ] && view="${2:-icon}"
+
+total_kb="$(awk '/^MemTotal:/ { print $2 }' /proc/meminfo)"
+available_kb="$(awk '/^MemAvailable:/ { print $2 }' /proc/meminfo)"
+used_kb=$((total_kb - available_kb))
+
+used_gb="$(awk -v kb="$used_kb" 'BEGIN { printf "%.1f", kb / 1024 / 1024 }')"
+total_gb="$(awk -v kb="$total_kb" 'BEGIN { printf "%.1f", kb / 1024 / 1024 }')"
+class="$(awk -v used="$used_kb" -v total="$total_kb" 'BEGIN {
+  pct = used / total
+  if (pct >= .85) print "high"; else if (pct >= .70) print "warm"; else print "normal"
+}')"
+
+if [ "$view" = "text" ]; then
+  text="RAM ${used_gb}/${total_gb}G"
+else
+  text="󰍛 ${used_gb}/${total_gb}G"
+fi
+
+printf '{"text":"%s","tooltip":"memory used / total","class":"%s"}\n' "$text" "$class"

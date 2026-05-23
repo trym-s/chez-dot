@@ -1,0 +1,42 @@
+#!/bin/sh
+
+view="icon"
+[ "$1" = "--view" ] && view="${2:-icon}"
+
+escape() {
+  printf '%s' "$1" | sed 's/\\/\\\\/g; s/"/\\"/g'
+}
+
+status="$(playerctl status 2>/dev/null)" || {
+  printf '{"text":"","tooltip":"","class":"empty"}\n'
+  exit 0
+}
+
+artist="$(playerctl metadata artist 2>/dev/null)"
+title="$(playerctl metadata title 2>/dev/null)"
+player="$(playerctl metadata --format '{{playerName}}' 2>/dev/null)"
+
+case "$status" in
+  Playing) icon="󰎈"; class="playing" ;;
+  Paused) icon="󰏤"; class="paused" ;;
+  *) icon="󰝚"; class="idle" ;;
+esac
+
+if [ -n "$artist" ] && [ -n "$title" ]; then
+  label="$artist - $title"
+elif [ -n "$title" ]; then
+  label="$title"
+else
+  label="$player"
+fi
+
+short="$(printf '%s' "$label" | cut -c 1-48)"
+[ "$short" != "$label" ] && short="${short}..."
+
+if [ "$view" = "text" ]; then
+  text="PLAY ${short}"
+else
+  text="${icon} ${short}"
+fi
+
+printf '{"text":"%s","tooltip":"%s","class":"%s"}\n' "$(escape "$text")" "$(escape "$label")" "$class"

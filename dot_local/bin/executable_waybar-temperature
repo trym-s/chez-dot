@@ -1,0 +1,54 @@
+#!/bin/sh
+
+view="icon"
+[ "$1" = "--view" ] && view="${2:-icon}"
+
+line="$(sensors 2>/dev/null | awk '/Package id 0:/ { print $4; exit }')"
+[ -z "$line" ] && line="$(sensors 2>/dev/null | awk '/Tctl:/ { print $2; exit }')"
+
+if [ -n "$line" ]; then
+  temp="$(printf '%s' "$line" | tr -d '+°C' | awk -F. '{ print $1 }')"
+else
+  temp_file=""
+  for zone in /sys/class/thermal/thermal_zone*; do
+    [ -r "$zone/type" ] || continue
+    [ "$(cat "$zone/type" 2>/dev/null)" = "x86_pkg_temp" ] || continue
+    [ -r "$zone/temp" ] && { temp_file="$zone/temp"; break; }
+  done
+  if [ -z "$temp_file" ]; then
+    for zone in /sys/class/thermal/thermal_zone*; do
+      [ -r "$zone/temp" ] && { temp_file="$zone/temp"; break; }
+    done
+  fi
+  [ -n "$temp_file" ] || {
+    [ "$view" = "text" ] && text="TEMP --" || text="󰔏 --"
+    printf '{"text":"%s","tooltip":"temperature sensor unavailable","class":"unknown"}\n' "$text"
+    exit 0
+  }
+  temp_milli="$(cat "$temp_file" 2>/dev/null)" || temp_milli=""
+  case "$temp_milli" in ''|*[!0-9]*) temp="" ;; *) temp=$(((temp_milli + 500) / 1000)) ;; esac
+fi
+
+case "$temp" in ''|*[!0-9]*) temp=0 ;; esac
+
+if [ "$temp" -ge 85 ]; then
+  class="critical"
+elif [ "$temp" -ge 75 ]; then
+  class="hot"
+elif [ "$temp" -ge 65 ]; then
+  class="warm"
+elif [ "$temp" -ge 55 ]; then
+  class="normal"
+elif [ "$temp" -ge 40 ]; then
+  class="cool"
+else
+  class="chill"
+fi
+
+if [ "$view" = "text" ]; then
+  text="TEMP ${temp}C"
+else
+  text="󰔏 ${temp}C"
+fi
+
+printf '{"text":"%s","tooltip":"CPU package temperature: %sC","class":"%s","percentage":%s}\n' "$text" "$temp" "$class" "$temp"

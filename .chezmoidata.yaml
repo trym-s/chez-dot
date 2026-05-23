@@ -264,6 +264,10 @@ host_profiles:
     hypr:
       monitor: "monitor=eDP-1,1920x1080@60,0x0,1"
       nvidia_env: []
+    waybar:
+      layout: laptop_full
+      style: boxed
+      view_profile: icon
   x230:
     machine:
       icon: '󰌢'
@@ -272,6 +276,10 @@ host_profiles:
     hypr:
       monitor: "monitor=LVDS-1,1366x768@60,0x0,1"
       nvidia_env: []
+    waybar:
+      layout: laptop_minimal
+      style: flat
+      view_profile: text
   ac:
     machine:
       icon: '󰍹'
@@ -284,10 +292,250 @@ host_profiles:
         - "env = __GLX_VENDOR_LIBRARY_NAME,nvidia"
         - "env = LIBVA_DRIVER_NAME,nvidia"
         - "env = __GL_VRR_ALLOWED,0"
+    waybar:
+      layout: laptop_full
+      style: boxed
+      view_profile: icon
   default:
     hypr:
       monitor: "monitor=,preferred,auto,1"
       nvidia_env: []
+    waybar:
+      layout: laptop_minimal
+      style: flat
+      view_profile: text
+
+waybar_layouts:
+  laptop_minimal:
+    height: 24
+    spacing: 8
+    margin_top: 0
+    margin_left: 0
+    margin_right: 0
+    left:
+      - workspaces
+    center:
+      - clock
+    right:
+      - audio
+      - brightness
+      - network
+      - cpu
+      - temperature
+      - memory
+      - tray
+  laptop_full:
+    height: 24
+    spacing: 8
+    margin_top: 8
+    margin_left: 10
+    margin_right: 10
+    left:
+      - workspaces
+      - updates
+      - player
+    center:
+      - clock
+    right:
+      - cpu
+      - memory
+      - temperature
+      - network
+      - brightness
+      - battery
+      - audio
+      - tray
+
+waybar_styles:
+  flat:
+    radius: 0
+    border_width: 0
+    bottom_border_width: 2
+    boxed_modules: false
+    shadow: false
+  boxed:
+    radius: 7
+    border_width: 1
+    bottom_border_width: 1
+    boxed_modules: true
+    shadow: true
+
+waybar_view_profiles:
+  text:
+    default: text
+    modules: {}
+  icon:
+    default: icon
+    modules: {}
+  x230_mixed:
+    default: text
+    modules:
+      clock: text
+      tray: icon
+  ac_mixed:
+    default: icon
+    modules:
+      clock: text
+
+waybar_modules:
+  workspaces:
+    id: "hyprland/workspaces"
+    config:
+      disable-scroll: true
+      all-outputs: true
+      format: "{name}"
+  clock:
+    id: "clock"
+    views:
+      icon:
+        format: "{:%H:%M  %a %d %b}"
+        tooltip-format: "{:%Y-%m-%d}"
+      text:
+        format: "{:%a %d %b  %H:%M}"
+        tooltip-format: "{:%Y-%m-%d}"
+  audio:
+    id: "pulseaudio"
+    views:
+      icon:
+        format: "󰕾 {volume}"
+        format-muted: "MUTE"
+        scroll-step: 5
+        on-click: "pavucontrol"
+      text:
+        format: "VOL {volume}%"
+        format-muted: "MUTE"
+        scroll-step: 5
+        on-click: "pavucontrol"
+  brightness:
+    id: "backlight"
+    views:
+      icon:
+        format: "{icon} {percent}"
+        format-icons:
+          - "󰃞"
+          - "󰃟"
+          - "󰃠"
+      text:
+        format: "BRT {percent}%"
+  battery:
+    id: "battery"
+    views:
+      icon:
+        format: "{icon} {capacity}"
+        format-charging: "󰂄 {capacity}"
+        format-plugged: "󰚥 {capacity}"
+        format-icons:
+          - "󰂎"
+          - "󰁺"
+          - "󰁻"
+          - "󰁼"
+          - "󰁽"
+          - "󰁾"
+          - "󰁿"
+          - "󰂀"
+          - "󰂁"
+          - "󰂂"
+          - "󰁹"
+        states:
+          warning: 25
+          critical: 10
+      text:
+        format: "BAT {capacity}%"
+        format-charging: "CHG {capacity}%"
+        format-plugged: "AC {capacity}%"
+        states:
+          warning: 25
+          critical: 10
+  cpu:
+    id: "custom/cpu"
+    views:
+      icon:
+        exec: "waybar-cpu --view icon"
+        return-type: "json"
+        interval: 3
+        tooltip: true
+      text:
+        exec: "waybar-cpu --view text"
+        return-type: "json"
+        interval: 3
+        tooltip: true
+  memory:
+    id: "custom/memory"
+    views:
+      icon:
+        exec: "waybar-memory --view icon"
+        return-type: "json"
+        interval: 5
+        tooltip: true
+      text:
+        exec: "waybar-memory --view text"
+        return-type: "json"
+        interval: 5
+        tooltip: true
+  temperature:
+    id: "custom/temperature"
+    views:
+      icon:
+        exec: "waybar-temperature --view icon"
+        return-type: "json"
+        interval: 5
+        tooltip: true
+      text:
+        exec: "waybar-temperature --view text"
+        return-type: "json"
+        interval: 5
+        tooltip: true
+  network:
+    id: "custom/network"
+    views:
+      icon:
+        exec: "waybar-network --view icon"
+        return-type: "json"
+        interval: 3
+        tooltip: true
+      text:
+        exec: "waybar-network --view text"
+        return-type: "json"
+        interval: 3
+        tooltip: true
+  player:
+    id: "custom/player"
+    views:
+      icon:
+        exec: "waybar-player --view icon"
+        return-type: "json"
+        interval: 2
+        max-length: 56
+        tooltip: true
+        on-click: "playerctl play-pause"
+        on-click-right: "playerctl next"
+      text:
+        exec: "waybar-player --view text"
+        return-type: "json"
+        interval: 2
+        max-length: 56
+        tooltip: true
+        on-click: "playerctl play-pause"
+        on-click-right: "playerctl next"
+  updates:
+    id: "custom/updates"
+    views:
+      icon:
+        exec: "waybar-updates --view icon"
+        return-type: "json"
+        interval: 1800
+        tooltip: true
+        on-click: "kitty -e sh -lc 'checkupdates; read -r _'"
+      text:
+        exec: "waybar-updates --view text"
+        return-type: "json"
+        interval: 1800
+        tooltip: true
+        on-click: "kitty -e sh -lc 'checkupdates; read -r _'"
+  tray:
+    id: "tray"
+    config:
+      spacing: 8
 
 ssh_palette:
   - 45
