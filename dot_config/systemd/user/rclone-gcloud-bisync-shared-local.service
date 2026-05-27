@@ -6,4 +6,4 @@ Wants=network-online.target
 [Service]
 Type=oneshot
 ExecStartPre=/usr/bin/mkdir -p %h/mnt/personal/shared_local
-ExecStart=/usr/bin/flock -n %t/rclone-gcloud-bisync-shared-local.lock /usr/bin/rclone bisync %h/mnt/personal/shared_local gcloud:Cloud --create-empty-src-dirs --resilient --recover
+ExecStart=/usr/bin/flock -n %t/rclone-gcloud-bisync-shared-local.lock /usr/bin/rclone bisync %h/mnt/personal/shared_local gcloud:Cloud --create-empty-src-dirs --resilient --recover --filters-file %h/.config/rclone/bisync-shared-local-filters.txt
