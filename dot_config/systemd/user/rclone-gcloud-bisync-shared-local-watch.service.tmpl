@@ -5,6 +5,7 @@ Wants=network-online.target
 
 [Service]
 Type=simple
+Environment="BISYNC_SSH_PEERS={{ if eq .host_profile "ac" }}x230{{ else if eq .host_profile "x230" }}ac{{ end }}"
 ExecStart=%h/.local/bin/rclone-bisync-shared-local-watch
 Restart=always
 RestartSec=5s

@@ -4,6 +4,20 @@ set -euo pipefail
 watch_dir="${HOME}/mnt/personal/shared_local"
 unit="rclone-gcloud-bisync-shared-local.service"
 quiet_window="${RCLONE_BISYNC_QUIET_WINDOW:-3}"
+peers="${BISYNC_SSH_PEERS:-}"
+
+rsync_excludes=(
+  --exclude='.git/'
+  --exclude='node_modules/'
+  --exclude='.venv/'
+  --exclude='venv/'
+  --exclude='__pycache__/'
+  --exclude='.pytest_cache/'
+  --exclude='.next/'
+  --exclude='dist/'
+  --exclude='build/'
+  --exclude='.cache/'
+)
 
 mkdir -p "$watch_dir"
 
@@ -11,7 +25,17 @@ trigger_sync() {
   systemctl --user start "$unit" || true
 }
 
+push_to_peers() {
+  [ -z "$peers" ] && return 0
+  for peer in $peers; do
+    ssh -o ConnectTimeout=2 -o BatchMode=yes "$peer" true 2>/dev/null || continue
+    rsync -az --delete "${rsync_excludes[@]}" \
+      "$watch_dir/" "$peer:$watch_dir/" 2>/dev/null || true
+  done
+}
+
 trigger_sync
+push_to_peers
 
 while true; do
   inotifywait -r -q \
@@ -23,5 +47,6 @@ while true; do
     }
 
   sleep "$quiet_window"
+  push_to_peers &
   trigger_sync
 done
