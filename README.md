@@ -3,6 +3,11 @@
 Chezmoi-managed Arch dotfiles. The current scope covers shell, prompt, tmux,
 kitty, Neovim, and Hyprland configuration.
 
+This repository is my portable Linux workstation setup. It is designed around a
+terminal-first workflow: reproducible dotfiles, shell automation, keyboard-driven
+tools, host-aware configuration, and open-source desktop components that can be
+moved across machines without rebuilding the environment by hand.
+
 ## Daily workflow
 
 ```sh
@@ -16,6 +21,14 @@ Edit source files in `~/.local/share/chezmoi`, not rendered files in `$HOME`,
 unless you intentionally plan to capture the rendered change back into source.
 See `docs/layering-guide.md` for how to add files, profile differences, and
 theme-driven regions.
+
+## Workflow highlights
+
+- Chezmoi templates for host-aware configuration and machine profiles.
+- Modular Neovim, zsh, tmux, kitty, and Hyprland setup.
+- Arch package lists split between `pacman` and `yay` inputs.
+- User-level systemd templates for SSHFS, rclone mount, and bisync workflows.
+- Portable mount layout for cloud, personal, SSH, and VPS surfaces.
 
 ## Managed scope
 
