@@ -44,5 +44,5 @@ theme-driven regions.
 - `dot_mnt/`: portable `~/mnt` README layout for cloud, personal, SSH, and VPS mount surfaces.
 - `dot_config/systemd/user/`: portable template user services for `~/mnt` SSHFS, rclone mount, and bisync units.
 - `dot_config/mnt/`: per-instance mount definitions consumed by the systemd templates.
-- `packages/`: Arch package inputs split by `pacman` and `yay`.
+- `packages/`: Arch package inputs split by `pacman`, `yay`, and optional modules.
 - `~/.config/chezmoi/chezmoi.toml`: local machine selection.

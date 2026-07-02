@@ -1,5 +1,11 @@
 # Waybar
 
+Install the Waybar package module before enabling the desktop profile:
+
+```sh
+xargs -a ~/.local/share/chezmoi/packages/modules/waybar.pacman.txt sudo pacman -S --needed
+```
+
 Waybar is modeled with three independent choices:
 
 - `layout`: where semantic modules are placed.

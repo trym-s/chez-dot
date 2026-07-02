@@ -7,6 +7,12 @@ xargs -a ~/.local/share/chezmoi/packages/pacman.txt sudo pacman -S --needed
 xargs -a ~/.local/share/chezmoi/packages/yay.txt yay -S --needed
 ```
 
+Optional package modules can be installed separately:
+
+```sh
+xargs -a ~/.local/share/chezmoi/packages/modules/waybar.pacman.txt sudo pacman -S --needed
+```
+
 Initialize this repository:
 
 ```sh

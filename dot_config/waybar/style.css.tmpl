@@ -58,7 +58,7 @@ window#waybar {
 }
 
 #workspaces button.active {
-  color: #{{ $theme.white }};
+  color: #{{ $theme.fg }};
   background: #{{ $theme.surface }};
 {{- if $style.boxed_modules }}
   box-shadow: inset 0 -2px #{{ $theme.accent }}, inset 0 0 0 1px #{{ $theme.surface_alt }};
@@ -87,7 +87,7 @@ window#waybar {
 }
 
 #clock {
-  color: #{{ $theme.white }};
+  color: #{{ $theme.fg }};
   font-weight: 700;
   border-color: #{{ $theme.accent }};
 }

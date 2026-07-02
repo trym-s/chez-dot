@@ -12,7 +12,7 @@ Hyprland. New terminal, editor, or desktop configs should follow the same
 pattern: generic template plus small profile data. Theme names are generic
 system themes, not prompt-specific themes, so kitty, tmux, yazi, nvim, and
 prompt can all consume the same value.
-Current themes are `rose`, `harbor`, `graphite`, `ember`, `violet`, and `mono`.
+Current themes are `rose`, `harbor`, `graphite`, `ember`, `violet`, `mono`, and `paper`.
 
 ## Host profiles
 

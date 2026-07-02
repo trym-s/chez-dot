@@ -2,7 +2,7 @@ themes:
   rose:
     font_family: "JetBrainsMono Nerd Font"
     terminal_font_size: "10.5"
-    terminal_opacity: "0.96"
+    terminal_opacity: "0.76"
     bg: "08090a"
     fg: "d7d7d7"
     surface: "1f2328"
@@ -36,7 +36,7 @@ themes:
   harbor:
     font_family: "JetBrainsMono Nerd Font"
     terminal_font_size: "10.5"
-    terminal_opacity: "0.96"
+    terminal_opacity: "0.76"
     bg: "071013"
     fg: "d6dde6"
     surface: "151b23"
@@ -69,7 +69,7 @@ themes:
   graphite:
     font_family: "JetBrainsMono Nerd Font"
     terminal_font_size: "10.5"
-    terminal_opacity: "0.96"
+    terminal_opacity: "0.76"
     bg: "0b0d0f"
     fg: "d7dde2"
     surface: "1b2025"
@@ -102,7 +102,7 @@ themes:
   ember:
     font_family: "JetBrainsMono Nerd Font"
     terminal_font_size: "10.5"
-    terminal_opacity: "0.96"
+    terminal_opacity: "0.76"
     bg: "100c08"
     fg: "e7d6c5"
     surface: "241a12"
@@ -135,7 +135,7 @@ themes:
   violet:
     font_family: "JetBrainsMono Nerd Font"
     terminal_font_size: "10.5"
-    terminal_opacity: "0.96"
+    terminal_opacity: "0.76"
     bg: "0d0b12"
     fg: "ddd7e8"
     surface: "1f1a2a"
@@ -169,44 +169,89 @@ themes:
   mono:
     font_family: "JetBrainsMono Nerd Font"
     terminal_font_size: "10.5"
-    terminal_opacity: "0.96"
-    bg: "0a0a0a"
-    fg: "d4d4d4"
-    surface: "1f1f1f"
-    surface_alt: "2a2a2a"
-    surface_dark: "141414"
-    muted: "737373"
-    subtle: "a3a3a3"
-    accent: "d4d4d4"
-    accent_alt: "ffffff"
-    danger: "ffffff"
-    success: "c7c7c7"
-    success_bright: "e5e5e5"
-    warning_dim: "a3a3a3"
-    warning: "d4d4d4"
-    attention: "e5e5e5"
-    info: "bdbdbd"
-    info_bright: "ededed"
-    secondary: "b8b8b8"
-    secondary_bright: "f5f5f5"
-    cyan: "c2c2c2"
-    cyan_bright: "f0f0f0"
+    terminal_opacity: "0.86"
+    bg: "050608"
+    fg: "eaf2ff"
+    surface: "111827"
+    surface_alt: "263244"
+    surface_dark: "0b0f16"
+    muted: "6e7a91"
+    subtle: "a9b8d0"
+    accent: "ffffff"
+    accent_alt: "c7d2e3"
+    danger: "ff4d6d"
+    success: "00d787"
+    success_bright: "5cffb0"
+    warning_dim: "d7af5f"
+    warning: "ffd166"
+    attention: "ff9f1c"
+    info: "5fa8ff"
+    info_bright: "8cc8ff"
+    secondary: "b980ff"
+    secondary_bright: "d7afff"
+    cyan: "00d7ff"
+    cyan_bright: "5fffff"
     white: "ffffff"
-    syntax_green: "9bbf9b"
-    syntax_yellow: "c2ad79"
-    syntax_blue: "9cb7cf"
-    syntax_magenta: "b6a3c8"
-    syntax_red: "d49a9a"
-    syntax_cyan: "8fbfbd"
+    syntax_green: "5cffb0"
+    syntax_yellow: "ffd166"
+    syntax_blue: "8cc8ff"
+    syntax_magenta: "d7afff"
+    syntax_red: "ff4d6d"
+    syntax_cyan: "5fffff"
+    yazi_folder: "93a4b8"
+    yazi_folder_icon: "9aa8b8"
+    yazi_highlight: "ffffff"
+    yazi_path: "a9b8d0"
     term_bg: 16
     term_fg: 15
-    term_accent: 250
-    term_accent_alt: 255
-    term_success: 250
-    term_warning: 248
+    term_accent: 15
+    term_accent_alt: 251
+    term_success: 48
+    term_warning: 221
     term_muted: 244
 
+  paper:
+    font_family: "JetBrainsMono Nerd Font"
+    terminal_font_size: "10.5"
+    terminal_opacity: "0.68"
+    bg: "f7f8fa"
+    fg: "1f2328"
+    surface: "ffffff"
+    surface_alt: "d0d7de"
+    surface_dark: "eef1f4"
+    muted: "57606a"
+    subtle: "3f4852"
+    accent: "0969da"
+    accent_alt: "8250df"
+    danger: "cf222e"
+    success: "1a7f37"
+    success_bright: "116329"
+    warning_dim: "9a6700"
+    warning: "9a6700"
+    attention: "bc4c00"
+    info: "0969da"
+    info_bright: "0550ae"
+    secondary: "8250df"
+    secondary_bright: "6639ba"
+    cyan: "1b7c83"
+    cyan_bright: "0a6b73"
+    white: "ffffff"
+    syntax_green: "116329"
+    syntax_yellow: "7d4e00"
+    syntax_blue: "0550ae"
+    syntax_magenta: "6639ba"
+    syntax_red: "a40e26"
+    syntax_cyan: "0a6b73"
+    term_bg: 15
+    term_fg: 15
+    term_accent: 33
+    term_accent_alt: 93
+    term_success: 28
+    term_warning: 130
+    term_muted: 240
+
 theme_aliases:
+  light: paper
   violent: violet
 
 hypr_appearance_profiles:
@@ -238,14 +283,14 @@ hypr_appearance_profiles:
     border_size: 4
     rounding: 8
     shadow:
-      enabled: true
+      enabled: false
       range: 24
       render_power: 3
       color: "rgba(00000066)"
     blur:
       enabled: true
-      size: 7
-      passes: 3
+      size: 1
+      passes: 1
       vibrancy: "0.18"
     animations:
       enabled: true

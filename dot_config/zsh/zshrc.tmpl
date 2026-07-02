@@ -22,22 +22,52 @@ export EDITOR=nvim
 export VISUAL=nvim
 export PAGER=less
 export LESS='-R'
-export BAT_THEME=base16
+export BAT_THEME=TwoDark
+export CLICOLOR=1
+export COLORTERM=truecolor
+export FORCE_COLOR=1
+export SYSTEMD_COLORS=1
+export GREP_COLORS='ms=01;38;2;255;255;255:mc=01;38;2;255;255;255:sl=:cx=:fn=38;2;95;255;255:ln=38;2;255;209;102:bn=38;2;185;128;255:se=38;2;110;122;145'
+export EZA_COLORS='di=38;2;95;255;255:ex=38;2;92;255;176:fi=38;2;234;242;255:ln=38;2;140;200;255:or=38;2;255;77;109:*.md=38;2;92;255;176:*.json=38;2;255;209;102:*.yaml=38;2;215;175;255:*.yml=38;2;215;175;255:*.toml=38;2;215;175;255:*.sh=38;2;92;255;176:*.py=38;2;255;209;102:*.js=38;2;255;209;102:*.ts=38;2;140;200;255'
+export FZF_DEFAULT_OPTS='--color=fg:#{{ $theme.fg }},bg:#{{ $theme.bg }},hl:#{{ $theme.accent }},fg+:#{{ $theme.white }},bg+:#{{ $theme.surface }},hl+:#{{ $theme.accent_alt }},info:#{{ $theme.warning }},prompt:#{{ $theme.success_bright }},pointer:#{{ $theme.accent }},marker:#{{ $theme.cyan_bright }},spinner:#{{ $theme.secondary_bright }},header:#{{ $theme.subtle }},border:#{{ $theme.surface_alt }}'
 export PATH="$HOME/.local/bin:$PATH"
+
+command -v fnm >/dev/null && eval "$(fnm env --use-on-cd --shell zsh)"
 
 alias ls='eza --group-directories-first --icons=auto'
 alias ll='eza -lah --group-directories-first --icons=auto'
 alias la='eza -la --group-directories-first --icons=auto'
 alias grep='grep --color=auto'
+alias diff='diff --color=auto'
+alias ip='ip -color=auto'
 alias cat='bat --paging=never'
 alias v='nvim'
 alias n='nvim'
 alias ..='cd ..'
 alias ...='cd ../..'
-alias sp='sudo pacman'
-alias pacup='sudo pacman -Syu'
+__pacman_clear_stale_lock() {
+  local lock=/var/lib/pacman/db.lck
+
+  [[ -e "$lock" ]] || return 0
+
+  if sudo fuser "$lock" >/dev/null 2>&1 || sudo lsof "$lock" >/dev/null 2>&1; then
+    echo "pacman database lock is active: $lock" >&2
+    echo "Another package manager appears to be running; not removing the lock." >&2
+    return 1
+  fi
+
+  echo "Removing stale pacman database lock: $lock" >&2
+  sudo rm -f "$lock"
+}
+
+sp() {
+  __pacman_clear_stale_lock || return
+  sudo pacman "$@"
+}
+alias pacup="sp -Syu"
 alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
 alias bd='bg && disown'
+alias disk='df -B1 --total -x tmpfs -x devtmpfs -x squashfs -x overlay -x efivarfs 2>/dev/null | awk '\''/^total/{printf "Total: %.2f GB\nUsed:  %.2f GB\nFree:  %.2f GB\n", $2/1073741824, $3/1073741824, $4/1073741824}'\'''
 
 bindkey -e
 
@@ -109,6 +139,7 @@ fi
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#{{ $theme.muted }}'
 [[ -r /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='fg=#{{ $theme.bg }},bg=#{{ $theme.accent }}'
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='fg=default,bg=default'
 [[ -r /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh ]] && source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
 bindkey '^[[A' history-substring-search-up
@@ -136,6 +167,41 @@ fi
 [[ -r "$HOME/.config/p10k/p10k.zsh" ]] && source "$HOME/.config/p10k/p10k.zsh"
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[default]='fg=#{{ $theme.fg }}'
+ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=#{{ $theme.danger }},bold'
+ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=#{{ $theme.secondary_bright }},bold'
+ZSH_HIGHLIGHT_STYLES[alias]='fg=#{{ $theme.success_bright }}'
+ZSH_HIGHLIGHT_STYLES[suffix-alias]='fg=#{{ $theme.success_bright }}'
+ZSH_HIGHLIGHT_STYLES[global-alias]='fg=#{{ $theme.success_bright }}'
+ZSH_HIGHLIGHT_STYLES[builtin]='fg=#{{ $theme.success_bright }}'
+ZSH_HIGHLIGHT_STYLES[function]='fg=#{{ $theme.info_bright }}'
+ZSH_HIGHLIGHT_STYLES[command]='fg=#{{ $theme.success_bright }}'
+ZSH_HIGHLIGHT_STYLES[precommand]='fg=#{{ $theme.warning }}'
+ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=#{{ $theme.success_bright }}'
+ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=#{{ $theme.warning }},bold'
+ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=#{{ $theme.warning }},bold'
+ZSH_HIGHLIGHT_STYLES[path]='fg=#{{ $theme.cyan_bright }},underline'
+ZSH_HIGHLIGHT_STYLES[path_prefix]='fg=#{{ $theme.cyan }}'
+ZSH_HIGHLIGHT_STYLES[path_approx]='fg=#{{ $theme.warning }},underline'
+ZSH_HIGHLIGHT_STYLES[globbing]='fg=#{{ $theme.warning }}'
+ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=#{{ $theme.warning }},bold'
+ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=#{{ $theme.accent }},bold'
+ZSH_HIGHLIGHT_STYLES[redirection]='fg=#{{ $theme.info_bright }}'
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=#{{ $theme.secondary_bright }}'
+ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=#{{ $theme.secondary_bright }}'
+ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]='fg=#{{ $theme.secondary_bright }}'
+ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='fg=#{{ $theme.secondary_bright }}'
+ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=#{{ $theme.cyan_bright }}'
+ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=#{{ $theme.secondary_bright }}'
+ZSH_HIGHLIGHT_STYLES[assign]='fg=#{{ $theme.cyan_bright }},bold'
+ZSH_HIGHLIGHT_STYLES[named-fd]='fg=#{{ $theme.info_bright }}'
+ZSH_HIGHLIGHT_STYLES[numeric-fd]='fg=#{{ $theme.info_bright }}'
+ZSH_HIGHLIGHT_STYLES[arg0]='fg=#{{ $theme.success_bright }}'
+ZSH_HIGHLIGHT_STYLES[bracket-level-1]='fg=#{{ $theme.cyan_bright }}'
+ZSH_HIGHLIGHT_STYLES[bracket-level-2]='fg=#{{ $theme.warning }}'
+ZSH_HIGHLIGHT_STYLES[bracket-level-3]='fg=#{{ $theme.secondary_bright }}'
+ZSH_HIGHLIGHT_STYLES[bracket-error]='fg=#{{ $theme.danger }},bold'
 [[ -r /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 function y() {

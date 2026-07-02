@@ -1,0 +1,16 @@
+bluez
+bluez-utils
+blueman
+iproute2
+kitty
+libpulse
+lm_sensors
+pacman-contrib
+pavucontrol
+pipewire
+pipewire-pulse
+playerctl
+ttf-jetbrains-mono-nerd
+util-linux
+waybar
+wireplumber
