@@ -108,7 +108,3 @@ set -g message-command-style "bg=#{{ $theme.bg }},fg=colour{{ $hostAccent }}"
 set -g mode-style "bg=colour{{ $hostAccent }},fg=#{{ $theme.bg }},bold"
 set -g default-terminal "tmux-256color"
 set -g update-environment "DISPLAY SSH_ASKPASS SSH_AUTH_SOCK SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY LANG LC_ALL LC_CTYPE"
-
-# Plugins
-set -g @pane-focus-size '60'
-run-shell '~/.tmux/plugins/tmux-pane-focus/focus.tmux'

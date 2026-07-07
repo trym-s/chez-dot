@@ -1,4 +1,0 @@
-[".tmux/plugins/tmux-pane-focus"]
-    type = "git-repo"
-    url = "https://github.com/graemedavidson/tmux-pane-focus.git"
-    refreshPeriod = "168h"
