@@ -15,8 +15,20 @@ setopt prompt_subst
 
 autoload -Uz compinit
 compinit -d "$HOME/.cache/zcompdump"
+
+zmodload zsh/complist
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':completion:*' verbose yes
+bindkey -M menuselect '^[[Z' reverse-menu-complete
+
+[[ -r /usr/share/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh ]] && source /usr/share/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always --icons=auto $realpath 2>/dev/null || ls -1 --color=always $realpath 2>/dev/null'
+zstyle ':fzf-tab:complete:*:*' fzf-preview '[[ -f $realpath ]] && (bat --color=always --style=numbers --line-range=:200 -- $realpath 2>/dev/null || cat -- $realpath) || (eza -1 --color=always --icons=auto $realpath 2>/dev/null || ls -1 --color=always $realpath 2>/dev/null)'
+zstyle ':fzf-tab:*' switch-group '<' '>'
 
 export EDITOR=nvim
 export VISUAL=nvim
