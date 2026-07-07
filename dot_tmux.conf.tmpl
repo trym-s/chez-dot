@@ -108,3 +108,8 @@ set -g message-command-style "bg=#{{ $theme.bg }},fg=colour{{ $hostAccent }}"
 set -g mode-style "bg=colour{{ $hostAccent }},fg=#{{ $theme.bg }},bold"
 set -g default-terminal "tmux-256color"
 set -g update-environment "DISPLAY SSH_ASKPASS SSH_AUTH_SOCK SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY LANG LC_ALL LC_CTYPE"
+
+# Plugins
+set -g @tabby_sidebar enabled
+run-shell '~/.tmux/plugins/tabby/tabby.tmux'
+run-shell -b 'sleep 1; if ! tmux list-windows -a -F "#{window_name}" | grep -q "^_tabby_stash_"; then ~/.tmux/plugins/tabby/bin/tabby hook toggle-collapse-sidebar >/dev/null 2>&1 || true; fi'
