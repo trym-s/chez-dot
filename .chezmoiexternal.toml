@@ -1,4 +1,0 @@
-[".tmux/plugins/tabby"]
-    type = "git-repo"
-    url = "https://github.com/brendandebeasi/tabby.git"
-    refreshPeriod = "168h"

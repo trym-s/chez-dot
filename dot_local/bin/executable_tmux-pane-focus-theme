@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+active_bg="$(tmux show-option -gqv @local_pane_active_bg 2>/dev/null || true)"
+inactive_bg="$(tmux show-option -gqv @local_pane_inactive_bg 2>/dev/null || true)"
+
+tmux list-panes -F '#{pane_id}|#{pane_active}|#{pane_current_command}|#{pane_start_command}' 2>/dev/null |
+while IFS='|' read -r pane active command start_command; do
+  case "$command|$start_command" in
+    *sidebar-renderer*|*"render sidebar"*) continue ;;
+  esac
+
+  if [ "$active" = "1" ]; then
+    if [ -n "$active_bg" ] && [ "$active_bg" != "default" ]; then
+      tmux set-option -p -t "$pane" window-style "bg=$active_bg" >/dev/null 2>&1 || true
+    else
+      tmux set-option -pu -t "$pane" window-style >/dev/null 2>&1 || true
+    fi
+  elif [ -n "$inactive_bg" ] && [ "$inactive_bg" != "default" ]; then
+    tmux set-option -p -t "$pane" window-style "bg=$inactive_bg" >/dev/null 2>&1 || true
+  else
+    tmux set-option -pu -t "$pane" window-style >/dev/null 2>&1 || true
+  fi
+done
