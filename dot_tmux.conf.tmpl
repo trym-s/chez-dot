@@ -20,6 +20,8 @@ set -as terminal-features ",xterm-kitty:RGB"
 set -g focus-events on
 set -g escape-time 0
 set -g history-limit 50000
+# Yazi/image-preview: let apps talk to the terminal through tmux (fixes TRT timeout)
+set -g allow-passthrough on
 set -g mouse on
 set -g renumber-windows on
 set -g base-index 1
@@ -76,8 +78,10 @@ bind-key -n M-c new-window -c "#{pane_current_path}"
 bind-key -n M-x kill-pane
 bind-key -n M-v split-window -h -c "#{pane_current_path}"
 bind-key -n M-h split-window -v -c "#{pane_current_path}"
-bind-key -n M-[ previous-window
-bind-key -n M-] next-window
+# M-[ / M-] collide with the CSI introducer (ESC [), which made Yazi's DA1/DSR
+# query responses trigger window switches. Use M-, / M-. instead.
+bind-key -n M-, previous-window
+bind-key -n M-. next-window
 
 # Workspaces are tmux windows: Alt+1..9/0 switches the full-window workspace.
 bind-key -n M-1 select-window -t:=1
