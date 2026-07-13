@@ -20,7 +20,8 @@ git status
 Edit source files in `~/.local/share/chezmoi`, not rendered files in `$HOME`,
 unless you intentionally plan to capture the rendered change back into source.
 See `docs/layering-guide.md` for how to add files, profile differences, and
-theme-driven regions.
+theme-driven regions. See `docs/migration-notes.md` for cross-machine
+follow-ups to run when applying this repo on another host.
 
 ## Workflow highlights
 
