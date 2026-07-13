@@ -25,7 +25,7 @@ zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:*' verbose yes
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 
-[[ -r /usr/share/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh ]] && source /usr/share/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
+[[ -r "$HOME/.local/share/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh" ]] && source "$HOME/.local/share/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh"
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always --icons=auto $realpath 2>/dev/null || ls -1 --color=always $realpath 2>/dev/null'
 zstyle ':fzf-tab:complete:*:*' fzf-preview '[[ -f $realpath ]] && (bat --color=always --style=numbers --line-range=:200 -- $realpath 2>/dev/null || cat -- $realpath) || (eza -1 --color=always --icons=auto $realpath 2>/dev/null || ls -1 --color=always $realpath 2>/dev/null)'
 zstyle ':fzf-tab:*' switch-group '<' '>'
@@ -42,7 +42,8 @@ export SYSTEMD_COLORS=1
 export GREP_COLORS='ms=01;38;2;255;255;255:mc=01;38;2;255;255;255:sl=:cx=:fn=38;2;95;255;255:ln=38;2;255;209;102:bn=38;2;185;128;255:se=38;2;110;122;145'
 export EZA_COLORS='di=38;2;95;255;255:ex=38;2;92;255;176:fi=38;2;234;242;255:ln=38;2;140;200;255:or=38;2;255;77;109:*.md=38;2;92;255;176:*.json=38;2;255;209;102:*.yaml=38;2;215;175;255:*.yml=38;2;215;175;255:*.toml=38;2;215;175;255:*.sh=38;2;92;255;176:*.py=38;2;255;209;102:*.js=38;2;255;209;102:*.ts=38;2;140;200;255'
 export FZF_DEFAULT_OPTS='--color=fg:#{{ $theme.fg }},bg:#{{ $theme.bg }},hl:#{{ $theme.accent }},fg+:#{{ $theme.white }},bg+:#{{ $theme.surface }},hl+:#{{ $theme.accent_alt }},info:#{{ $theme.warning }},prompt:#{{ $theme.success_bright }},pointer:#{{ $theme.accent }},marker:#{{ $theme.cyan_bright }},spinner:#{{ $theme.secondary_bright }},header:#{{ $theme.subtle }},border:#{{ $theme.surface_alt }}'
-export PATH="$HOME/.local/bin:$PATH"
+export GOPATH="$HOME/.local/share/go"
+export PATH="$HOME/.local/bin:$GOPATH/bin:$PATH"
 
 command -v fnm >/dev/null && eval "$(fnm env --use-on-cd --shell zsh)"
 
@@ -84,8 +85,15 @@ alias disk='df -B1 --total -x tmpfs -x devtmpfs -x squashfs -x overlay -x efivar
 bindkey -e
 
 command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
-command -v fzf >/dev/null && source /usr/share/fzf/key-bindings.zsh
-command -v fzf >/dev/null && source /usr/share/fzf/completion.zsh
+if command -v fzf >/dev/null; then
+  for __fzf_kb in /usr/share/fzf/key-bindings.zsh /usr/share/doc/fzf/examples/key-bindings.zsh; do
+    [[ -r "$__fzf_kb" ]] && { source "$__fzf_kb"; break; }
+  done
+  for __fzf_comp in /usr/share/fzf/completion.zsh /usr/share/doc/fzf/examples/completion.zsh; do
+    [[ -r "$__fzf_comp" ]] && { source "$__fzf_comp"; break; }
+  done
+  unset __fzf_kb __fzf_comp
+fi
 
 if command -v fzf >/dev/null; then
   __fzf_files() {
@@ -149,11 +157,11 @@ if command -v fzf >/dev/null; then
 fi
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#{{ $theme.muted }}'
-[[ -r /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -r /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='fg=#{{ $theme.bg }},bg=#{{ $theme.accent }}'
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='fg=default,bg=default'
-[[ -r /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh ]] && source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+[[ -r "$HOME/.local/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh" ]] && source "$HOME/.local/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh"
 
 # Up/Down: yazdigin metinle BASLAYAN gecmis girdileri arar (varsayilan)
 autoload -Uz history-search-end
@@ -182,8 +190,8 @@ bindkey '^Y' copy-command-line
 POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 if [[ -r /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme ]]; then
   source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
-elif [[ -r "$HOME/powerlevel10k/powerlevel10k.zsh-theme" ]]; then
-  source "$HOME/powerlevel10k/powerlevel10k.zsh-theme"
+elif [[ -r "$HOME/.local/share/zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme" ]]; then
+  source "$HOME/.local/share/zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme"
 fi
 [[ -r "$HOME/.config/p10k/p10k.zsh" ]] && source "$HOME/.config/p10k/p10k.zsh"
 
@@ -223,7 +231,7 @@ ZSH_HIGHLIGHT_STYLES[bracket-level-1]='fg=#{{ $theme.cyan_bright }}'
 ZSH_HIGHLIGHT_STYLES[bracket-level-2]='fg=#{{ $theme.warning }}'
 ZSH_HIGHLIGHT_STYLES[bracket-level-3]='fg=#{{ $theme.secondary_bright }}'
 ZSH_HIGHLIGHT_STYLES[bracket-error]='fg=#{{ $theme.danger }},bold'
-[[ -r /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[[ -r /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 function y() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
